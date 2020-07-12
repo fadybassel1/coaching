@@ -13,14 +13,14 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/admin', function () {
+Route::get('/', function () {
     return view('admin.dashboard');
 })->middleware('auth:admin')->name('admin.dashboard');
 
 
-Route::group(['prefix' => 'admin','middleware'=>'guest:admin'], function () {
-    Route::get('login', 'Auth\AdminLoginController@showLoginForm');
-    Route::post('login', 'Auth\AdminLoginController@login')->name('admin.login.submit');
+Route::group(['namespace' => 'Auth','middleware'=>['guest:admin','guest:web']], function () {
+    Route::get('login', 'AdminLoginController@showLoginForm');
+    Route::post('login', 'AdminLoginController@login')->name('admin.login.submit');
 });
 
 
