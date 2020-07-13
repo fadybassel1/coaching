@@ -14,6 +14,8 @@
                         </div>
                     @endif
                         {{auth()->user()->name}}
+                        {{Auth::guard('admin')->check()}}
+                        {{Auth::guard('web')->check()}}
                     {{ __('You are logged in! as user') }}
                 </div>
             </div>
