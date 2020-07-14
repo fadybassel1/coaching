@@ -24,3 +24,12 @@ Route::group(['namespace' => 'Auth','middleware'=>['guest:admin','guest:web']], 
 });
 
 
+Route::get('/posts','PostController@index');
+Route::get('post-comment/{id}','CommentController@index');
+Route::get('post-comment-view/{id}','CommentController@viewComments');
+
+
+Route::get('/postss',function(){
+    return view('admin.posts');
+});
+
