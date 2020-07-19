@@ -3,7 +3,9 @@
  * includes Vue and other libraries. It is a great starting point when
  * building robust, powerful web applications using Vue and Laravel.
  */
-
+require("bootstrap-css-only/css/bootstrap.min.css");
+require("mdbvue/lib/css/mdb.min.css");
+require("@fortawesome/fontawesome-free/css/all.min.css");
 require('./bootstrap');
 
 window.Vue = require('vue');
@@ -23,6 +25,10 @@ Vue.use(require('vue-resource'));
 Vue.component('post-component', require('./components/PostComponent.vue').default);
 Vue.component('comment-component', require('./components/comment-Component.vue').default);
 Vue.component('InfiniteLoading', require('vue-infinite-loading'));
+
+
+
+
 /**
  * Next, we will create a fresh Vue application instance and attach it to
  * the page. Then, you may begin adding components to this application

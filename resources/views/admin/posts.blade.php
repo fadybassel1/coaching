@@ -1,10 +1,8 @@
 @extends('layouts.app')
 
 @section('content')
-    <div id="app">
+<div id="app">
 
-        <post-component></post-component>
-    </div>
+    <post-component></post-component>
+</div>
 @endsection
-
-
