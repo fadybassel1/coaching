@@ -2361,22 +2361,50 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   mounted: function mounted() {
-    console.log('Component mounted.');
+    console.log("Component mounted.");
   },
   data: function data() {
     return {
-      component: 'post-component'
+      component: "post-component"
     };
   },
   methods: {},
   computed: {
     currentProperties: function currentProperties() {
-      if (this.component === 'post-component') {
+      if (this.component === "post-component") {
         return {
-          posturl: '/user/api/recent-posts',
-          commenturl: '/admin/post-comment/'
+          posturl: "/user/api/recent-posts",
+          commenturl: "/admin/post-comment/",
+          likeurl: "/admin/post-likes/"
         };
       } else return {};
     }
@@ -2480,13 +2508,69 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 window.onload = function () {
-  $('#exampleModalCenter').on('show.bs.modal', function (e) {
+  $("#exampleModalCenter").on("show.bs.modal", function (e) {
     window.location.hash = "modal";
   });
-  $(window).on('hashchange', function (event) {
+  $(window).on("hashchange", function (event) {
     if (window.location.hash != "#modal") {
-      $('#exampleModalCenter').modal('hide');
+      $("#exampleModalCenter").modal("hide");
     }
   });
 };
@@ -2494,21 +2578,31 @@ window.onload = function () {
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: {
-    'posturl': String,
-    'commenturl': String
+    posturl: String,
+    commenturl: String,
+    likeurl: String
   },
   components: {
     InfiniteLoading: vue_infinite_loading__WEBPACK_IMPORTED_MODULE_0___default.a
   },
   mounted: function mounted() {
     console.log("Component mounted.");
+    $("#exampleModalCenter").on("hidden.bs.modal", function () {
+      this.comments = [];
+      console.log(this.comments);
+    });
+    $("#likeModal").on("hidden.bs.modal", function () {
+      this.likes = [];
+      console.log(this.likes);
+    });
   },
   data: function data() {
     return {
       posts: [],
       page: 1,
       commentpage: 1,
-      comments: []
+      comments: [],
+      likes: []
     };
   },
   methods: {
@@ -2535,17 +2629,39 @@ window.onload = function () {
         }
       });
     },
-    infiniteHandler: function infiniteHandler($state) {
+    viewLikes: function viewLikes(id) {
       var _this2 = this;
+
+      console.log(id);
+      this.$http.get(this.likeurl + id + "?page=" + this.likes).then(function (_ref2) {
+        var data = _ref2.data;
+        console.log(data.length);
+
+        if (data.length) {
+          var _this2$likes;
+
+          console.log("likes");
+          console.log(_this2.likes); //this.comments=[];
+
+          (_this2$likes = _this2.likes).unshift.apply(_this2$likes, _toConsumableArray(data));
+
+          console.log(_this2.likes);
+        } else {
+          _this2.likes = [];
+        }
+      });
+    },
+    infiniteHandler: function infiniteHandler($state) {
+      var _this3 = this;
 
       var lock = true;
       var vm = this;
       console.log(this.posturl);
-      this.$http.get(this.posturl + "?page=" + this.page).then(function (_ref2) {
-        var data = _ref2.data;
+      this.$http.get(this.posturl + "?page=" + this.page).then(function (_ref3) {
+        var data = _ref3.data;
 
         if (data.data.data.length) {
-          _this2.page += 1;
+          _this3.page += 1;
           $.each(data.data.data, function (key, value) {
             vm.posts.push(value);
           });
@@ -39567,7 +39683,11 @@ var render = function() {
                       staticClass: "rounded-circle",
                       attrs: { src: "../avatar.jpg", width: "50px", alt: "" }
                     }),
-                    _vm._v(" " + _vm._s(post.user.name) + "\n              ")
+                    _vm._v(
+                      "\n            " +
+                        _vm._s(post.user.name) +
+                        "\n            "
+                    )
                   ]),
                   _vm._v(" "),
                   _c("div", { staticClass: "card-body" }, [
@@ -39586,7 +39706,24 @@ var render = function() {
                           staticClass: "far fa-thumbs-up float-left ml-md-5",
                           staticStyle: { color: "#3687CF" }
                         },
-                        [_vm._v(" Like")]
+                        [
+                          _vm._v("\n                Like\n                "),
+                          _c(
+                            "a",
+                            {
+                              attrs: {
+                                "data-toggle": "modal",
+                                "data-target": "#likeModal"
+                              },
+                              on: {
+                                click: function($event) {
+                                  return _vm.viewLikes(post.id)
+                                }
+                              }
+                            },
+                            [_vm._v(_vm._s(post.likes_count))]
+                          )
+                        ]
                       ),
                       _vm._v(" "),
                       _c(
@@ -39609,7 +39746,7 @@ var render = function() {
                                 }
                               }
                             },
-                            [_vm._v(" Comments")]
+                            [_vm._v("Comments")]
                           )
                         ]
                       )
@@ -39701,9 +39838,9 @@ var render = function() {
                           }
                         }),
                         _vm._v(
-                          " " +
+                          "\n            " +
                             _vm._s(comment.user.name) +
-                            "\n                        "
+                            "\n            "
                         ),
                         _c(
                           "cite",
@@ -39729,6 +39866,90 @@ var render = function() {
                 }),
                 _vm._v(" "),
                 _vm._m(0)
+              ],
+              2
+            )
+          ]
+        )
+      ]
+    ),
+    _vm._v(" "),
+    _c(
+      "div",
+      {
+        staticClass: "modal fade",
+        attrs: {
+          id: "likeModal",
+          tabindex: "-1",
+          role: "dialog",
+          "aria-labelledby": "exampleModalCenterTitle",
+          "aria-hidden": "true"
+        }
+      },
+      [
+        _c(
+          "div",
+          {
+            staticClass: "modal-dialog modal-dialog-centered",
+            attrs: { role: "document" }
+          },
+          [
+            _c(
+              "div",
+              { staticClass: "modal-content" },
+              [
+                _c("div", { staticClass: "modal-header" }, [
+                  _c(
+                    "h5",
+                    {
+                      staticClass: "modal-title",
+                      attrs: { id: "exampleModalCenterTitle" }
+                    },
+                    [_vm._v("Likes")]
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "button",
+                    {
+                      staticClass: "close",
+                      attrs: {
+                        type: "button",
+                        "data-dismiss": "modal",
+                        "aria-label": "Close"
+                      },
+                      on: { click: _vm.hash }
+                    },
+                    [
+                      _c("span", { attrs: { "aria-hidden": "true" } }, [
+                        _vm._v("×")
+                      ])
+                    ]
+                  )
+                ]),
+                _vm._v(" "),
+                _vm._l(_vm.likes, function(like) {
+                  return _c("div", { key: like.id }, [
+                    _c("h5", { staticClass: "card-header" }, [
+                      _c("img", {
+                        staticClass: "rounded-circle",
+                        attrs: { src: "../avatar.jpg", width: "50px", alt: "" }
+                      }),
+                      _vm._v(
+                        "\n            " + _vm._s(like.name) + "\n            "
+                      ),
+                      _c(
+                        "cite",
+                        {
+                          staticClass: "blockquote-footer float-right",
+                          attrs: { title: "Group Admin" }
+                        },
+                        [_vm._v("Member")]
+                      )
+                    ]),
+                    _vm._v(" "),
+                    _c("p", [_vm._v(_vm._s(like.created_at))])
+                  ])
+                })
               ],
               2
             )
@@ -53899,8 +54120,8 @@ __webpack_require__.r(__webpack_exports__);
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! /home/fady/coaching/resources/js/app.js */"./resources/js/app.js");
-module.exports = __webpack_require__(/*! /home/fady/coaching/resources/sass/app.scss */"./resources/sass/app.scss");
+__webpack_require__(/*! /home/mark/coaching/resources/js/app.js */"./resources/js/app.js");
+module.exports = __webpack_require__(/*! /home/mark/coaching/resources/sass/app.scss */"./resources/sass/app.scss");
 
 
 /***/ }),

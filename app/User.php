@@ -28,7 +28,7 @@ class User extends Authenticatable
         'password', 'remember_token',
     ];
 
-    /**
+    /**getLikes
      * The attributes that should be cast to native types.
      *
      * @var array
