@@ -181,7 +181,7 @@ export default {
         .then(({ data }) => {
           if (data.data.length) {
             console.log(this.comments);
-            //this.comments=[];
+            this.comments=[];
             this.comments.unshift(...data.data);
             console.log(this.comments);
           } else {
@@ -199,7 +199,7 @@ export default {
           if (data.length) {
             console.log("likes");
             console.log(this.likes);
-            //this.comments=[];
+            this.likes=[];
             this.likes.unshift(...data);
             console.log(this.likes);
           } else {

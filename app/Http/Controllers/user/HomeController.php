@@ -43,7 +43,6 @@ class HomeController extends Controller
         $userGroups = Auth::user()->groups()->withCount('posts')->orderBy('posts_count', 'desc')->limit(5)->get();
         return response(['data' => ['popularGroups' => $popularGroups, 'userGroups' => $userGroups]]);
     }
-
     public function recent_posts()
     {
         $groups = Auth::user()->groups()->pluck('id');
