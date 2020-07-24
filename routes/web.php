@@ -19,4 +19,10 @@ Route::get('/', function () {
 
 Auth::routes();
 
-Route::get('/home', 'HomeController@index')->name('home');
+//home page routes...
+Route::group(['namespace'=>'user'], function () {
+    Route::get('/home', 'HomeController@index')->name('home');
+    Route::get('/api/group-stat', 'HomeController@group_stat');
+    Route::get('/api/recent-posts', 'HomeController@recent_posts');
+    Route::get('/api/suggested-groups', 'HomeController@suggested_groups');
+});

@@ -18,6 +18,7 @@ class CreateGroupsTable extends Migration
             $table->string('name');
             $table->bigInteger('admin_id')->unsigned();
             $table->bigInteger('track_id')->unsigned();
+            $table->string('photo');
             $table->timestamps();
             $table->foreign('admin_id')->references('id')->on('admins');
             $table->foreign('track_id')->references('id')->on('tracks');

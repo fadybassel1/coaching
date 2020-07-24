@@ -23,7 +23,8 @@ Vue.use(require('vue-resource'));
 // files.keys().map(key => Vue.component(key.split('/').pop().split('.')[0], files(key).default))
 
 Vue.component('post-component', require('./components/PostComponent.vue').default);
-Vue.component('comment-component', require('./components/comment-Component.vue').default);
+Vue.component('home-group', require('./components/HomeGroupComponent.vue').default);
+Vue.component('home-post', require('./components/HomePostComponent.vue').default);
 Vue.component('InfiniteLoading', require('vue-infinite-loading'));
 
 

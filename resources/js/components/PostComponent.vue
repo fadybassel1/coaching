@@ -99,17 +99,23 @@ export default {
     return {
       posts: [],
       page: 1,
+      commentpage:1,
       comments: []
     };
   },
   methods: {
     viewComments(id) {
+      console.log(id);
       this.$http
-        .get("/admin/post-comment/" + id + "?page=" + this.page)
+        .get("/admin/post-comment/" + id + "?page=" + this.commentpage)
         .then(({ data }) => {
           if (data.data.length) {
-            this.page += 1;
-            this.comments.unshift(...data.data.reverse());
+             console.log(this.comments);
+            //this.comments=[];
+            this.comments.unshift(...data.data);
+             console.log(this.comments);
+          }else {
+            this.comments=[];
           }
         });
     },
