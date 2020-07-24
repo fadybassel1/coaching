@@ -1,7 +1,7 @@
 
 
 <template>
-  <div class="container">
+ <div class="col-lg-7">
     <div class="card"> 
       <div v-for="post in posts" :key="post.id" class="row justify-content-center">
         <div class="col-md-8">
@@ -39,7 +39,7 @@
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title" id="exampleModalCenterTitle">Comments</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <button type="button" class="close" data-dismiss="modal" @click="hash" aria-label="Close">
                     <span aria-hidden="true">×</span>
                 </button>
             </div>
@@ -88,6 +88,10 @@ window.onload=function(){
 
 import InfiniteLoading from "vue-infinite-loading";
 export default {
+   props: {
+        'posturl':String,
+        'commenturl':String,
+      },
   components: {
     InfiniteLoading
   },
@@ -97,6 +101,7 @@ export default {
   },
   data() {
     return {
+     
       posts: [],
       page: 1,
       commentpage:1,
@@ -104,10 +109,13 @@ export default {
     };
   },
   methods: {
+    hash(){
+      window.location.hash = "";
+    },
     viewComments(id) {
       console.log(id);
       this.$http
-        .get("/admin/post-comment/" + id + "?page=" + this.commentpage)
+        .get(this.commenturl + id + "?page=" + this.commentpage)
         .then(({ data }) => {
           if (data.data.length) {
              console.log(this.comments);
@@ -123,11 +131,11 @@ export default {
     infiniteHandler($state) {
       var lock = true;
       let vm = this;
-
-      this.$http.get("/admin/getposts?page=" + this.page).then(({ data }) => {
-        if (data.data.length) {
+      console.log(this.posturl);
+      this.$http.get(this.posturl+"?page=" + this.page).then(({ data }) => {
+        if (data.data.data.length) {
           this.page += 1;
-          $.each(data.data, function(key, value) {
+          $.each(data.data.data, function(key, value) {
             vm.posts.push(value);
           });
           $state.loaded();

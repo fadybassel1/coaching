@@ -2144,6 +2144,46 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   mounted: function mounted() {
@@ -2384,6 +2424,10 @@ window.onload = function () {
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
+  props: {
+    'posturl': String,
+    'commenturl': String
+  },
   components: {
     InfiniteLoading: vue_infinite_loading__WEBPACK_IMPORTED_MODULE_0___default.a
   },
@@ -2399,11 +2443,14 @@ window.onload = function () {
     };
   },
   methods: {
+    hash: function hash() {
+      window.location.hash = "";
+    },
     viewComments: function viewComments(id) {
       var _this = this;
 
       console.log(id);
-      this.$http.get("/admin/post-comment/" + id + "?page=" + this.commentpage).then(function (_ref) {
+      this.$http.get(this.commenturl + id + "?page=" + this.commentpage).then(function (_ref) {
         var data = _ref.data;
 
         if (data.data.length) {
@@ -2424,12 +2471,13 @@ window.onload = function () {
 
       var lock = true;
       var vm = this;
-      this.$http.get("/admin/getposts?page=" + this.page).then(function (_ref2) {
+      console.log(this.posturl);
+      this.$http.get(this.posturl + "?page=" + this.page).then(function (_ref2) {
         var data = _ref2.data;
 
-        if (data.data.length) {
+        if (data.data.data.length) {
           _this2.page += 1;
-          $.each(data.data, function (key, value) {
+          $.each(data.data.data, function (key, value) {
             vm.posts.push(value);
           });
           $state.loaded();
@@ -38930,7 +38978,73 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c("div", { staticClass: "col-md-3" }, [
-    _c("div", { staticClass: "card my-4" }, [
+    _c(
+      "div",
+      {
+        staticClass: "carousel slide",
+        attrs: { id: "carouselExampleControls", "data-ride": "carousel" }
+      },
+      [
+        _c(
+          "div",
+          { staticClass: "carousel-inner" },
+          [
+            _vm._m(0),
+            _vm._v(" "),
+            _vm._l(_vm.popularGroups, function(popularg) {
+              return _c(
+                "div",
+                { key: popularg.id, staticClass: "carousel-item" },
+                [
+                  _c(
+                    "div",
+                    {
+                      staticClass: "card mb-3",
+                      staticStyle: { "max-width": "540px" }
+                    },
+                    [
+                      _c("div", { staticClass: "row no-gutters" }, [
+                        _c("div", { staticClass: "col-md-4" }, [
+                          _c("img", {
+                            staticClass: "card-img",
+                            attrs: { src: "../avatar.jpg", alt: "..." }
+                          })
+                        ]),
+                        _vm._v(" "),
+                        _c("div", { staticClass: "col-md-8" }, [
+                          _c("div", { staticClass: "card-body" }, [
+                            _c("h5", { staticClass: "card-title" }, [
+                              _vm._v(_vm._s(popularg.name))
+                            ]),
+                            _vm._v(" "),
+                            _c("p", { staticClass: "card-text" }, [
+                              _vm._v(
+                                "Has " +
+                                  _vm._s(popularg.users_count) +
+                                  " Members."
+                              )
+                            ]),
+                            _vm._v(" "),
+                            _vm._m(1, true)
+                          ])
+                        ])
+                      ])
+                    ]
+                  )
+                ]
+              )
+            })
+          ],
+          2
+        ),
+        _vm._v(" "),
+        _vm._m(2),
+        _vm._v(" "),
+        _vm._m(3)
+      ]
+    ),
+    _vm._v(" "),
+    _c("div", { staticClass: "card my-4 border-primary mb-3" }, [
       _c("h5", { staticClass: "card-header" }, [_vm._v("Your Groups.")]),
       _vm._v(" "),
       _c(
@@ -38949,7 +39063,7 @@ var render = function() {
       )
     ]),
     _vm._v(" "),
-    _c("div", { staticClass: "card my-4" }, [
+    _c("div", { staticClass: "card my-4 border-primary mb-3" }, [
       _c("h5", { staticClass: "card-header" }, [
         _vm._v("Suggested Groups for you.")
       ]),
@@ -38968,35 +39082,84 @@ var render = function() {
         }),
         0
       )
-    ]),
-    _vm._v(" "),
-    _c("div", { staticClass: "card my-4" }, [
-      _c("h5", { staticClass: "card-header" }, [
-        _vm._v("Most Popular Groups.")
-      ]),
-      _vm._v(" "),
-      _c(
-        "div",
-        { staticClass: "card-body" },
-        _vm._l(_vm.popularGroups, function(popularg) {
-          return _c("ul", { key: popularg.id, staticClass: "list-group" }, [
-            _c("li", { staticClass: "list-group-item" }, [
-              _c("a", { attrs: { href: "/user/group/" + popularg.id } }, [
-                _vm._v(_vm._s(popularg.name))
-              ]),
-              _vm._v(" "),
-              _c("i", { staticClass: "fas fa-users indigo-text" }, [
-                _vm._v(" " + _vm._s(popularg.users_count))
-              ])
-            ])
-          ])
-        }),
-        0
-      )
     ])
   ])
 }
-var staticRenderFns = []
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "carousel-item active" }, [
+      _c("div", { staticClass: "card-body text-center" }, [
+        _vm._v("\n           Popular Groups\n         ")
+      ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("p", { staticClass: "card-text" }, [
+      _c(
+        "a",
+        {
+          staticClass: "btn btn-outline-primary btn-sm btn-block",
+          attrs: { href: "" }
+        },
+        [_vm._v("Join")]
+      )
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c(
+      "a",
+      {
+        staticClass: "carousel-control-prev",
+        attrs: {
+          href: "#carouselExampleControls",
+          role: "button",
+          "data-slide": "prev"
+        }
+      },
+      [
+        _c("span", {
+          staticClass: "carousel-control-prev-icon blue",
+          attrs: { "aria-hidden": "true" }
+        }),
+        _vm._v(" "),
+        _c("span", { staticClass: "sr-only" }, [_vm._v("Previous")])
+      ]
+    )
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c(
+      "a",
+      {
+        staticClass: "carousel-control-next",
+        attrs: {
+          href: "#carouselExampleControls",
+          role: "button",
+          "data-slide": "next"
+        }
+      },
+      [
+        _c("span", {
+          staticClass: "carousel-control-next-icon blue",
+          attrs: { "aria-hidden": "true" }
+        }),
+        _vm._v(" "),
+        _c("span", { staticClass: "sr-only" }, [_vm._v("Next")])
+      ]
+    )
+  }
+]
 render._withStripped = true
 
 
@@ -39117,7 +39280,7 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", { staticClass: "container" }, [
+  return _c("div", { staticClass: "col-lg-7" }, [
     _c(
       "div",
       { staticClass: "card" },
@@ -39224,7 +39387,34 @@ var render = function() {
               "div",
               { staticClass: "modal-content" },
               [
-                _vm._m(0),
+                _c("div", { staticClass: "modal-header" }, [
+                  _c(
+                    "h5",
+                    {
+                      staticClass: "modal-title",
+                      attrs: { id: "exampleModalCenterTitle" }
+                    },
+                    [_vm._v("Comments")]
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "button",
+                    {
+                      staticClass: "close",
+                      attrs: {
+                        type: "button",
+                        "data-dismiss": "modal",
+                        "aria-label": "Close"
+                      },
+                      on: { click: _vm.hash }
+                    },
+                    [
+                      _c("span", { attrs: { "aria-hidden": "true" } }, [
+                        _vm._v("×")
+                      ])
+                    ]
+                  )
+                ]),
                 _vm._v(" "),
                 _vm._l(_vm.comments, function(comment) {
                   return _c(
@@ -39268,7 +39458,7 @@ var render = function() {
                   )
                 }),
                 _vm._v(" "),
-                _vm._m(1)
+                _vm._m(0)
               ],
               2
             )
@@ -39279,34 +39469,6 @@ var render = function() {
   ])
 }
 var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "modal-header" }, [
-      _c(
-        "h5",
-        {
-          staticClass: "modal-title",
-          attrs: { id: "exampleModalCenterTitle" }
-        },
-        [_vm._v("Comments")]
-      ),
-      _vm._v(" "),
-      _c(
-        "button",
-        {
-          staticClass: "close",
-          attrs: {
-            type: "button",
-            "data-dismiss": "modal",
-            "aria-label": "Close"
-          }
-        },
-        [_c("span", { attrs: { "aria-hidden": "true" } }, [_vm._v("×")])]
-      )
-    ])
-  },
   function() {
     var _vm = this
     var _h = _vm.$createElement

@@ -7,7 +7,7 @@
     <div class="row">
  <!-- Sidebar Widgets Column -->
       <home-group></home-group>  
-      <home-post></home-post>
+      <post-component posturl='/user/api/recent-posts' commenturl="/admin/post-comment/"> </post-component>
      <div class="col-md-2">
       <div class="card my-4">
         <h5 class="card-header">popular Tracks...</h5>

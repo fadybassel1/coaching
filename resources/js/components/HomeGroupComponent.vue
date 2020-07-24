@@ -1,38 +1,78 @@
 <template>
-    
   <div class="col-md-3">
-   
-    <div class="card my-4">
+    <div id="carouselExampleControls" class="carousel slide" data-ride="carousel">
+      
+      <div  class="carousel-inner">
+         <div class="carousel-item active">
+           <div class="card-body text-center">
+             Popular Groups
+           </div>
+         </div>
+        <div v-for="popularg in popularGroups" :key="popularg.id" class="carousel-item">
+          <div class="card mb-3" style="max-width: 540px;">
+            <div class="row no-gutters">
+              <div class="col-md-4">
+                <img :src="'../avatar.jpg'" class="card-img" alt="..." />
+              </div>
+              <div class="col-md-8">
+                <div class="card-body">
+                  <h5 class="card-title">{{popularg.name}}</h5>
+                  <p
+                    class="card-text"
+                  >Has {{popularg.users_count}} Members.</p>
+                  <p class="card-text">
+                   <a class="btn btn-outline-primary btn-sm btn-block" href="">Join</a>
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <a
+        class="carousel-control-prev"
+        href="#carouselExampleControls"
+        role="button"
+        data-slide="prev"
+      >
+        <span class="carousel-control-prev-icon blue" aria-hidden="true"></span>
+        <span class="sr-only">Previous</span>
+      </a>
+      <a
+        class="carousel-control-next"
+        href="#carouselExampleControls"
+        role="button"
+        data-slide="next"
+      >
+        <span class="carousel-control-next-icon blue" aria-hidden="true"></span>
+        <span class="sr-only">Next</span>
+      </a>
+    </div>
+
+    <div class="card my-4 border-primary mb-3">
       <h5 class="card-header">Your Groups.</h5>
       <div class="card-body">
-            <ul v-for="group in userGroups" :key="group.id" class="list-group">
-          <li class="list-group-item"> <a :href="'/user/group/'+group.id">{{group.name}}</a></li>
+        <ul v-for="group in userGroups" :key="group.id" class="list-group">
+          <li class="list-group-item">
+            <a :href="'/user/group/'+group.id">{{group.name}}</a>
+          </li>
         </ul>
-        </div>
+      </div>
     </div>
-    
 
-     <div class="card my-4">
+    <div class="card my-4 border-primary mb-3">
       <h5 class="card-header">Suggested Groups for you.</h5>
       <div class="card-body">
         <ul v-for="suggest in suggestedGroups" :key="suggest.id" class="list-group">
-          <li class="list-group-item"> <a :href="'/user/group/'+suggest.id">{{suggest.name}}</a></li>
-        </ul>
-      </div>
-    </div>
-    
-     <div class="card my-4">
-      <h5 class="card-header">Most Popular Groups.</h5>
-      <div class="card-body">
-        <ul v-for="popularg in popularGroups" :key="popularg.id" class="list-group">
-          <li class="list-group-item"> <a :href="'/user/group/'+popularg.id">{{popularg.name}}</a>  <i class="fas fa-users indigo-text"> {{popularg.users_count}}</i></li>
+          <li class="list-group-item">
+            <a :href="'/user/group/'+suggest.id">{{suggest.name}}</a>
+          </li>
         </ul>
       </div>
     </div>
 
-
+  
   </div>
-
 </template>
 
 
@@ -47,7 +87,7 @@ export default {
     return {
       popularGroups: [],
       userGroups: [],
-      suggestedGroups:[]
+      suggestedGroups: [],
     };
   },
 
@@ -61,12 +101,12 @@ export default {
       }
     });
 
-       this.$http.get("/user/api/suggested-groups").then(({ data }) => {
-           console.log();
+    this.$http.get("/user/api/suggested-groups").then(({ data }) => {
+      console.log();
       if (data.data.suggestedGroups.length) {
         this.suggestedGroups = data.data.suggestedGroups;
       }
-    });    
+    });
   },
 
   methods: {},

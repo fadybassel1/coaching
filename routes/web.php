@@ -20,7 +20,7 @@ Route::get('/', function () {
 Auth::routes();
 
 //home page routes...
-Route::group(['namespace'=>'user'], function () {
+Route::group(['namespace'=>'user' , 'prefix'=>'user'], function () {
     Route::get('/home', 'HomeController@index')->name('home');
     Route::get('/api/group-stat', 'HomeController@group_stat');
     Route::get('/api/recent-posts', 'HomeController@recent_posts');
