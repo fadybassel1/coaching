@@ -6,9 +6,12 @@
 
     <div class="row">
  <!-- Sidebar Widgets Column -->
-      <home-group></home-group>  
-      <post-component posturl='/user/api/recent-posts' commenturl="/admin/post-comment/"> </post-component>
-     <div class="col-md-2">
+      <home-group></home-group> 
+      <div class="col-lg-7">
+      {{-- <post-component posturl='/user/api/recent-posts' commenturl="/admin/post-comment/"> </post-component>  --}}
+      <home-nav></home-nav>
+    </div>
+      <div class="col-md-2">
       <div class="card my-4">
         <h5 class="card-header">popular Tracks...</h5>
           <ul class="list-group">
@@ -26,7 +29,6 @@
     <!-- /.row -->
 
   </div>
-
 @endsection
 
 

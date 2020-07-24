@@ -1,7 +1,7 @@
 
 
 <template>
- <div class="col-lg-7">
+  <div class="card shadow-none">
     <div class="card"> 
       <div v-for="post in posts" :key="post.id" class="row justify-content-center">
         <div class="col-md-8">

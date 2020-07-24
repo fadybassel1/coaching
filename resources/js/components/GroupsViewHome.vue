@@ -1,13 +1,14 @@
 <template>
-  <div class="col-md-3">
-    <div  id="carouselExampleControls" class="carousel slide" data-ride="carousel">
-      
+
+ <div id="carouselExampleControls1" class="carousel slide" data-ride="carousel">
+      For Testinggg
       <div  class="carousel-inner">
          <div class="carousel-item active">
            <div class="card-body text-center">
              Popular Groups
            </div>
          </div>
+         <div class="container-fluid">
         <div v-for="popularg in popularGroups" :key="popularg.id" class="carousel-item">
           <div class="card mb-3" style="max-width: 540px;">
             <div class="row no-gutters">
@@ -28,10 +29,11 @@
             </div>
           </div>
         </div>
+        </div>
       </div>
       <a
         class="carousel-control-prev"
-        href="#carouselExampleControls"
+        href="#carouselExampleControls1"
         role="button"
         data-slide="prev"
       >
@@ -40,7 +42,7 @@
       </a>
       <a
         class="carousel-control-next"
-        href="#carouselExampleControls"
+        href="#carouselExampleControls1"
         role="button"
         data-slide="next"
       >
@@ -49,41 +51,20 @@
       </a>
     </div>
 
-    <div class="card my-4 border-primary mb-3">
-      <h5 class="card-header">Your Groups.</h5>
-      <div class="card-body">
-        <ul v-for="group in userGroups" :key="group.id" class="list-group">
-          <li class="list-group-item">
-            <a :href="'/user/group/'+group.id">{{group.name}}</a>
-          </li>
-        </ul>
-      </div>
-    </div>
-
-    <div class="card my-4 border-primary mb-3">
-      <h5 class="card-header">Suggested Groups for you.</h5>
-      <div class="card-body">
-        <ul v-for="suggest in suggestedGroups" :key="suggest.id" class="list-group">
-          <li class="list-group-item">
-            <a :href="'/user/group/'+suggest.id">{{suggest.name}}</a>
-          </li>
-        </ul>
-      </div>
-    </div>
-
-  
-  </div>
+               
 </template>
 
-
-
 <script>
-import InfiniteLoading from "vue-infinite-loading";
-export default {
-  mounted() {
-    console.log("Component mounted.");
-  },
-  data() {
+import InfiniteLoading from 'vue-infinite-loading';
+   export default { 
+       props: ['id'], 
+         components: {
+     InfiniteLoading,
+     },
+       mounted() {
+            console.log('Component mounted.')
+        }
+    ,data() {
     return {
       popularGroups: [],
       userGroups: [],
@@ -96,19 +77,17 @@ export default {
       if (data.data.popularGroups.length) {
         this.popularGroups = data.data.popularGroups;
       }
-      if (data.data.userGroups.length) {
-        this.userGroups = data.data.userGroups;
-      }
-    });
-
-    this.$http.get("/user/api/suggested-groups").then(({ data }) => {
-      console.log();
-      if (data.data.suggestedGroups.length) {
-        this.suggestedGroups = data.data.suggestedGroups;
-      }
     });
   },
+    }
 
-  methods: {},
-};
+
+
+
+
+
+
+
+
+
 </script>

@@ -24,7 +24,8 @@ Vue.use(require('vue-resource'));
 
 Vue.component('post-component', require('./components/PostComponent.vue').default);
 Vue.component('home-group', require('./components/HomeGroupComponent.vue').default);
-Vue.component('home-post', require('./components/HomePostComponent.vue').default);
+Vue.component('home-nav', require('./components/HomeNavComponent.vue').default);
+Vue.component('groups-view-home', require('./components/GroupsViewHome.vue').default);
 Vue.component('InfiniteLoading', require('vue-infinite-loading'));
 
 

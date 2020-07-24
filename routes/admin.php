@@ -25,7 +25,7 @@ Route::group(['namespace' => 'Auth','middleware'=>['guest:admin','guest:web']], 
 
 
 
-Route::group(['middleware'=>'auth:admin'], function () {
+Route::group(['middleware'=>'auth'], function () {
     Route::get('/getposts','user\PostController@index');
     Route::get('post-comment/{id}','CommentController@index');
     Route::get('/posts',function(){
