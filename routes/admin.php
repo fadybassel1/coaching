@@ -18,20 +18,18 @@ Route::get('/', function () {
 })->middleware('auth:admin')->name('admin.dashboard');
 
 
-Route::group(['namespace' => 'Auth','middleware'=>['guest:admin','guest:web']], function () {
+Route::group(['namespace' => 'Auth', 'middleware' => ['guest:admin', 'guest:web']], function () {
     Route::get('login', 'AdminLoginController@showLoginForm');
     Route::post('login', 'AdminLoginController@login')->name('admin.login.submit');
 });
 
 
 
-Route::group(['middleware'=>'auth'], function () {
-    Route::get('/getposts','user\PostController@index');
-    Route::get('post-comment/{id}','CommentController@index');
-    Route::get('/posts',function(){
+Route::group(['middleware' => 'auth'], function () {
+    Route::get('/getposts', 'user\PostController@index');
+    Route::get('post-comment/{id}', 'CommentController@index');
+    Route::get('post-likes/{id}', 'user\PostController@getLikes');
+    Route::get('/posts', function () {
         return view('admin.posts');
     });
 });
-
-
-

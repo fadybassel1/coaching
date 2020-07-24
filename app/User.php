@@ -37,7 +37,13 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
-    public function groups(){
-        return $this->belongsToMany('App\models\Group','group_users');
+    public function groups()
+    {
+        return $this->belongsToMany('App\models\Group', 'group_users');
+    }
+
+    public function likes()
+    {
+        return $this->belongsToMany('App\models\Posts', 'user_post_like', 'user_id', 'post_id');
     }
 }
