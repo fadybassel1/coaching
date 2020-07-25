@@ -12,12 +12,21 @@
             <div class="card-body">
               <p class="card-title text-muted">{{ post.created_at }}</p>
               <h5>{{ post.text }}</h5>
-              <a
-                v-if="post.likes_count > 0"
-                data-toggle="modal"
-                @click="viewLikes(post.id)"
-                data-target="#likeModal"
-              >{{ post.likes_count }} Likes</a>
+              <div class="d-flex">
+                <a
+                  v-if="post.likes_count > 0"
+                  data-toggle="modal"
+                  @click="viewLikes(post.id)"
+                  data-target="#likeModal"
+                >{{ post.likes_count }} Likes</a>
+                <a
+                  v-if="post.comments_count > 0"
+                  data-toggle="modal"
+                  data-target="#exampleModalCenter"
+                  class="ml-auto"
+                  v-on:click="component = 'comments'; post_id = post.id;"
+                >{{ post.comments_count }} Comments</a>
+              </div>
               <hr />
               <div id="card-footer">
                 <i
@@ -204,6 +213,7 @@ export default {
         if (data.data.data.length) {
           this.page += 1;
           $.each(data.data.data, function (key, value) {
+            console.log(value);
             vm.posts.push(value);
           });
           $state.loaded();
