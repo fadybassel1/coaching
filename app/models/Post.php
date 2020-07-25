@@ -24,4 +24,9 @@ class Post extends Model
     {
         return $this->belongsToMany('App\User', 'user_post_like', 'post_id', 'user_id');
     }
+
+    public function comments()
+    {
+        return $this->hasMany('App\models\Comment');
+    }
 }

@@ -2698,6 +2698,9 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
 //
 //
 //
+//
+//
+//
 window.onload = function () {
   $("#exampleModalCenter").on("show.bs.modal", function (e) {
     window.location.hash = "modal";
@@ -2822,6 +2825,7 @@ window.onload = function () {
         if (data.data.data.length) {
           _this3.page += 1;
           $.each(data.data.data, function (key, value) {
+            console.log(value);
             vm.posts.push(value);
           });
           $state.loaded();
@@ -40046,23 +40050,49 @@ var render = function() {
                       _vm._v(" "),
                       _c("h5", [_vm._v(_vm._s(post.text))]),
                       _vm._v(" "),
-                      post.likes_count > 0
-                        ? _c(
-                            "a",
-                            {
-                              attrs: {
-                                "data-toggle": "modal",
-                                "data-target": "#likeModal"
-                              },
-                              on: {
-                                click: function($event) {
-                                  return _vm.viewLikes(post.id)
+                      _c("div", { staticClass: "d-flex" }, [
+                        post.likes_count > 0
+                          ? _c(
+                              "a",
+                              {
+                                attrs: {
+                                  "data-toggle": "modal",
+                                  "data-target": "#likeModal"
+                                },
+                                on: {
+                                  click: function($event) {
+                                    return _vm.viewLikes(post.id)
+                                  }
                                 }
-                              }
-                            },
-                            [_vm._v(_vm._s(post.likes_count) + " Likes")]
-                          )
-                        : _vm._e(),
+                              },
+                              [_vm._v(_vm._s(post.likes_count) + " Likes")]
+                            )
+                          : _vm._e(),
+                        _vm._v(" "),
+                        post.comments_count > 0
+                          ? _c(
+                              "a",
+                              {
+                                staticClass: "ml-auto",
+                                attrs: {
+                                  "data-toggle": "modal",
+                                  "data-target": "#exampleModalCenter"
+                                },
+                                on: {
+                                  click: function($event) {
+                                    _vm.component = "comments"
+                                    _vm.post_id = post.id
+                                  }
+                                }
+                              },
+                              [
+                                _vm._v(
+                                  _vm._s(post.comments_count) + " Comments"
+                                )
+                              ]
+                            )
+                          : _vm._e()
+                      ]),
                       _vm._v(" "),
                       _c("hr"),
                       _vm._v(" "),
@@ -52903,8 +52933,8 @@ __webpack_require__.r(__webpack_exports__);
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! /home/fady/coaching/resources/js/app.js */"./resources/js/app.js");
-module.exports = __webpack_require__(/*! /home/fady/coaching/resources/sass/app.scss */"./resources/sass/app.scss");
+__webpack_require__(/*! /home/mark/coaching/resources/js/app.js */"./resources/js/app.js");
+module.exports = __webpack_require__(/*! /home/mark/coaching/resources/sass/app.scss */"./resources/sass/app.scss");
 
 
 /***/ })

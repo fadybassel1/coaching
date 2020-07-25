@@ -46,7 +46,7 @@ class HomeController extends Controller
     public function recent_posts()
     {
         $groups = Auth::user()->groups()->pluck('id');
-        $posts = Post::whereIn('group_id', $groups)->with('user')->withCount('likes')->orderBy('created_at', 'desc')->paginate(10);
+        $posts = Post::whereIn('group_id', $groups)->with('user')->withCount('likes')->withCount('comments')->orderBy('created_at', 'desc')->paginate(10);
         foreach ($posts as $post) {
             if ($post->likes->contains(Auth::user()->id))
                 $post->liked = true;
