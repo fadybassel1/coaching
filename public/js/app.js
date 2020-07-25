@@ -2608,6 +2608,7 @@ window.onload = function () {
       posts: [],
       page: 1,
       commentpage: 1,
+      likepage: 1,
       comments: [],
       likes: []
     };
@@ -2653,18 +2654,19 @@ window.onload = function () {
       var _this2 = this;
 
       console.log(id);
+      console.log(this.likeurl + id + "?page=" + this.likepage);
       this.$http.get(this.likeurl + id + "?page=" + this.likes).then(function (_ref2) {
         var data = _ref2.data;
-        console.log(data.length);
+        console.log(data);
 
-        if (data.length) {
+        if (data.data.length) {
           var _this2$likes;
 
           console.log("likes");
           console.log(_this2.likes);
           _this2.likes = [];
 
-          (_this2$likes = _this2.likes).unshift.apply(_this2$likes, _toConsumableArray(data));
+          (_this2$likes = _this2.likes).unshift.apply(_this2$likes, _toConsumableArray(data.data));
 
           console.log(_this2.likes);
         } else {

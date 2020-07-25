@@ -173,6 +173,7 @@ export default {
       posts: [],
       page: 1,
       commentpage: 1,
+      likepage: 1,
       comments: [],
       likes: [],
     };
@@ -211,15 +212,16 @@ export default {
 
     viewLikes(id) {
       console.log(id);
+      console.log(this.likeurl + id + "?page=" + this.likepage);
       this.$http
         .get(this.likeurl + id + "?page=" + this.likes)
         .then(({ data }) => {
-          console.log(data.length);
-          if (data.length) {
+          console.log(data);
+          if (data.data.length) {
             console.log("likes");
             console.log(this.likes);
             this.likes = [];
-            this.likes.unshift(...data);
+            this.likes.unshift(...data.data);
             console.log(this.likes);
           } else {
             this.likes = [];

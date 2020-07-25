@@ -35,6 +35,6 @@ class PostController extends Controller
    public function getLikes($postID)
    {
       $likes = Post::where('id', $postID)->first();
-      return \response()->json($likes->likes);
+      return \response()->json($likes->likes()->paginate(10));
    }
 }
