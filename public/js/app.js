@@ -2250,6 +2250,8 @@ window.onload = function () {
             _this2.comments.unshift(data.comment);
 
             _this2.commentText = "";
+
+            _this2.$emit("commentAdded", _this2.post_id);
           }
         });
       }
@@ -2738,6 +2740,11 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
 //
 //
 //
+//
+//
+//
+//
+//
 window.onload = function () {
   $("#exampleModalCenter").on("show.bs.modal", function (e) {
     window.location.hash = "modal";
@@ -2792,6 +2799,12 @@ window.onload = function () {
   methods: {
     hash: function hash() {
       window.location.hash = "";
+    },
+    increment_comments_count: function increment_comments_count(post_id) {
+      var post = this.posts.find(function (o) {
+        return o.id === post_id;
+      });
+      post.comments_count++;
     },
     likeButton: function likeButton(post) {
       Vue.axios.post("api/posts/" + post.id + "/like").then(function (response) {
@@ -40245,7 +40258,11 @@ var render = function() {
       _c(
         _vm.component,
         _vm._b(
-          { key: _vm.post_id, tag: "component" },
+          {
+            key: _vm.post_id,
+            tag: "component",
+            on: { commentAdded: _vm.increment_comments_count }
+          },
           "component",
           _vm.currentProperties,
           false

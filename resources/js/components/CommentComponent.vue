@@ -125,6 +125,7 @@ export default {
             if (data.success) {
               this.comments.unshift(data.comment);
               this.commentText = "";
+              this.$emit("commentAdded", this.post_id);
             }
           });
       }

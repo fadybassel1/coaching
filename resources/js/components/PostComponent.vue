@@ -70,7 +70,12 @@
       <infinite-loading @distance="1" @infinite="infiniteHandler"></infinite-loading>
     </div>
     <!-- COMMENT MODEL -->
-    <component :is="component" v-bind="currentProperties" :key="post_id"></component>
+    <component
+      :is="component"
+      v-bind="currentProperties"
+      :key="post_id"
+      @commentAdded="increment_comments_count"
+    ></component>
     <!-- END COMMENT MODEL -->
     <!-- LIKE MODEL -->
     <div
@@ -171,6 +176,10 @@ export default {
   methods: {
     hash() {
       window.location.hash = "";
+    },
+    increment_comments_count(post_id) {
+      let post = this.posts.find((o) => o.id === post_id);
+      post.comments_count++;
     },
     likeButton(post) {
       Vue.axios.post("api/posts/" + post.id + "/like").then((response) => {
