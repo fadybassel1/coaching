@@ -1,4 +1,4 @@
-<template>
+<template >
   <div class="card shadow-none">
     <div class="card">
       <div v-for="post in posts" :key="post.id" class="row justify-content-center">
@@ -12,6 +12,12 @@
             <div class="card-body">
               <p class="card-title text-muted">{{ post.created_at }}</p>
               <h5>{{ post.text }}</h5>
+              <a
+                v-if="post.likes_count > 0"
+                data-toggle="modal"
+                @click="viewLikes(post.id)"
+                data-target="#likeModal"
+              >{{ post.likes_count }} Likes</a>
               <hr />
               <div id="card-footer">
                 <i
@@ -23,18 +29,13 @@
                 <i
                   v-else
                   @click="dislikeButton(post)"
-                  style="color:#3687CF;"
+                  style="color:#3687CF; cursor: pointer;"
                   class="fas fa-thumbs-up float-left ml-md-5"
                 >Like</i>
-                <a
-                  data-toggle="modal"
-                  @click="viewLikes(post.id)"
-                  data-target="#likeModal"
-                >{{ post.likes_count }}</a>
                 <i style="color:#3687CF;" class="far fa-comment float-right mr-md-5">
                   <a
+                    v-on:click="component = 'comments'; post_id = post.id;"
                     data-toggle="modal"
-                    @click="viewComments(post.id)"
                     data-target="#exampleModalCenter"
                   >Comments</a>
                 </i>
@@ -46,51 +47,7 @@
       <infinite-loading @distance="1" @infinite="infiniteHandler"></infinite-loading>
     </div>
     <!-- COMMENT MODEL -->
-    <div
-      class="modal fade"
-      id="exampleModalCenter"
-      tabindex="-1"
-      role="dialog"
-      aria-labelledby="exampleModalCenterTitle"
-      aria-hidden="true"
-    >
-      <div class="modal-dialog modal-dialog-centered" role="document">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h5 class="modal-title" id="exampleModalCenterTitle">Comments</h5>
-            <button
-              type="button"
-              class="close"
-              data-dismiss="modal"
-              @click="hash"
-              aria-label="Close"
-            >
-              <span aria-hidden="true">×</span>
-            </button>
-          </div>
-          <div v-for="comment in comments" :key="comment.id" class="modal-body">
-            <h5 class="card-header">
-              <img :src="'../avatar.jpg'" class="rounded-circle" width="50px" alt />
-              {{ comment.user.name }}
-              <cite
-                class="blockquote-footer float-right"
-                title="Group Admin"
-              >Member</cite>
-            </h5>
-            <div class="card-body">
-              <p class="card-title">{{ comment.created_at }}.</p>
-              <h5>{{ comment.text }}</h5>
-              <hr />
-            </div>
-          </div>
-
-          <div class="modal-footer">
-            <input class="form-control" style="width: 90%" placeholder="send a comment" type="text" />
-            <i class="far fa-paper-plane active"></i>
-          </div>
-        </div>
-      </div>
-    </div>
+    <component :is="component" v-bind="currentProperties" :key="post_id"></component>
     <!-- END COMMENT MODEL -->
     <!-- LIKE MODEL -->
     <div
@@ -156,17 +113,25 @@ export default {
   components: {
     InfiniteLoading,
   },
+  computed: {
+    currentProperties: function () {
+      return {
+        commenturl: this.commenturl,
+        post_id: this.post_id,
+      };
+    },
+  },
 
   mounted() {
     console.log("Component mounted.");
-    $("#exampleModalCenter").on("hidden.bs.modal", function () {
-      this.comments = [];
-      console.log(this.comments);
-    });
-    $("#likeModal").on("hidden.bs.modal", function () {
-      this.likes = [];
-      console.log(this.likes);
-    });
+    // $("#exampleModalCenter").on("hidden.bs.modal", function () {
+    //   this.comments = [];
+    //   console.log(this.comments);
+    // });
+    // $("#likeModal").on("hidden.bs.modal", function () {
+    //   this.likes = [];
+    //   console.log(this.likes);
+    // });
   },
   data() {
     return {
@@ -176,6 +141,8 @@ export default {
       likepage: 1,
       comments: [],
       likes: [],
+      component: "",
+      post_id: -1,
     };
   },
   methods: {

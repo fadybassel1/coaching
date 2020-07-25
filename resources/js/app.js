@@ -37,6 +37,7 @@ Vue.component(
     "groups-view-home",
     require("./components/GroupsViewHome.vue").default
 );
+Vue.component("comments", require("./components/CommentComponent.vue").default);
 Vue.component("InfiniteLoading", require("vue-infinite-loading"));
 
 /**

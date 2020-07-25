@@ -2094,6 +2094,148 @@ module.exports = {
 
 /***/ }),
 
+/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/CommentComponent.vue?vue&type=script&lang=js&":
+/*!***************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/CommentComponent.vue?vue&type=script&lang=js& ***!
+  \***************************************************************************************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var vue_infinite_loading__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vue-infinite-loading */ "./node_modules/vue-infinite-loading/dist/vue-infinite-loading.js");
+/* harmony import */ var vue_infinite_loading__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(vue_infinite_loading__WEBPACK_IMPORTED_MODULE_0__);
+function _toConsumableArray(arr) { return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _unsupportedIterableToArray(arr) || _nonIterableSpread(); }
+
+function _nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
+
+function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
+
+function _iterableToArray(iter) { if (typeof Symbol !== "undefined" && Symbol.iterator in Object(iter)) return Array.from(iter); }
+
+function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) return _arrayLikeToArray(arr); }
+
+function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
+
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+window.onload = function () {
+  $("#exampleModalCenter").on("show.bs.modal", function (e) {
+    window.location.hash = "modal";
+  });
+  $(window).on("hashchange", function (event) {
+    if (window.location.hash != "#modal") {
+      $("#exampleModalCenter").modal("hide");
+    }
+  });
+};
+
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+  props: {
+    commenturl: String,
+    post_id: Number
+  },
+  components: {
+    InfiniteLoading: vue_infinite_loading__WEBPACK_IMPORTED_MODULE_0___default.a
+  },
+  mounted: function mounted() {
+    var _this = this;
+
+    axios.get(this.commenturl + this.post_id + "?page=" + this.commentpage).then(function (_ref) {
+      var data = _ref.data;
+
+      if (data.data.length) {
+        var _this$comments;
+
+        _this.commentpage += 1;
+
+        (_this$comments = _this.comments).push.apply(_this$comments, _toConsumableArray(data.data));
+      } else {
+        _this.loadMore = false;
+      }
+    });
+  },
+  data: function data() {
+    return {
+      commentpage: 1,
+      comments: [],
+      loadMore: true
+    };
+  },
+  methods: {
+    hash: function hash() {
+      window.location.hash = "";
+    },
+    close: function close() {
+      this.$emit("close");
+    },
+    infiniteHandler: function infiniteHandler() {
+      var _this2 = this;
+
+      this.loadMore = true;
+      axios.get(this.commenturl + this.post_id + "?page=" + this.commentpage).then(function (_ref2) {
+        var data = _ref2.data;
+
+        if (data.data.length) {
+          var _this2$comments;
+
+          _this2.commentpage += 1;
+
+          (_this2$comments = _this2.comments).push.apply(_this2$comments, _toConsumableArray(data.data));
+        } else {
+          _this2.loadMore = false;
+        }
+      });
+    }
+  }
+});
+
+/***/ }),
+
 /***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/GroupsViewHome.vue?vue&type=script&lang=js&":
 /*!*************************************************************************************************************************************************************************!*\
   !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/GroupsViewHome.vue?vue&type=script&lang=js& ***!
@@ -2528,49 +2670,6 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 window.onload = function () {
   $("#exampleModalCenter").on("show.bs.modal", function (e) {
     window.location.hash = "modal";
@@ -2592,16 +2691,23 @@ window.onload = function () {
   components: {
     InfiniteLoading: vue_infinite_loading__WEBPACK_IMPORTED_MODULE_0___default.a
   },
+  computed: {
+    currentProperties: function currentProperties() {
+      return {
+        commenturl: this.commenturl,
+        post_id: this.post_id
+      };
+    }
+  },
   mounted: function mounted() {
-    console.log("Component mounted.");
-    $("#exampleModalCenter").on("hidden.bs.modal", function () {
-      this.comments = [];
-      console.log(this.comments);
-    });
-    $("#likeModal").on("hidden.bs.modal", function () {
-      this.likes = [];
-      console.log(this.likes);
-    });
+    console.log("Component mounted."); // $("#exampleModalCenter").on("hidden.bs.modal", function () {
+    //   this.comments = [];
+    //   console.log(this.comments);
+    // });
+    // $("#likeModal").on("hidden.bs.modal", function () {
+    //   this.likes = [];
+    //   console.log(this.likes);
+    // });
   },
   data: function data() {
     return {
@@ -2610,7 +2716,9 @@ window.onload = function () {
       commentpage: 1,
       likepage: 1,
       comments: [],
-      likes: []
+      likes: [],
+      component: "",
+      post_id: -1
     };
   },
   methods: {
@@ -39183,6 +39291,156 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;var _typeof="fun
 
 /***/ }),
 
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/CommentComponent.vue?vue&type=template&id=d6b6866e&":
+/*!*******************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/CommentComponent.vue?vue&type=template&id=d6b6866e& ***!
+  \*******************************************************************************************************************************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c(
+    "div",
+    {
+      staticClass: "modal fade",
+      attrs: {
+        id: "exampleModalCenter",
+        tabindex: "-1",
+        role: "dialog",
+        "aria-labelledby": "exampleModalCenterTitle",
+        "aria-hidden": "true"
+      }
+    },
+    [
+      _c(
+        "div",
+        {
+          staticClass: "modal-dialog modal-dialog-centered",
+          attrs: { role: "document" }
+        },
+        [
+          _c(
+            "div",
+            { staticClass: "modal-content" },
+            [
+              _c("div", { staticClass: "modal-header" }, [
+                _c(
+                  "h5",
+                  {
+                    staticClass: "modal-title",
+                    attrs: { id: "exampleModalCenterTitle" }
+                  },
+                  [_vm._v("Comments")]
+                ),
+                _vm._v(" "),
+                _c(
+                  "button",
+                  {
+                    staticClass: "close",
+                    attrs: {
+                      type: "button",
+                      "data-dismiss": "modal",
+                      "aria-label": "Close"
+                    },
+                    on: { click: _vm.hash }
+                  },
+                  [
+                    _c("span", { attrs: { "aria-hidden": "true" } }, [
+                      _vm._v("×")
+                    ])
+                  ]
+                )
+              ]),
+              _vm._v(" "),
+              _vm._l(_vm.comments, function(comment) {
+                return _c(
+                  "div",
+                  { key: comment.id, staticClass: "modal-body" },
+                  [
+                    _c("h5", { staticClass: "card-header" }, [
+                      _c("img", {
+                        staticClass: "rounded-circle",
+                        attrs: { src: "../avatar.jpg", width: "50px", alt: "" }
+                      }),
+                      _vm._v(
+                        "\n          " +
+                          _vm._s(comment.user.name) +
+                          "\n          "
+                      ),
+                      _c(
+                        "cite",
+                        {
+                          staticClass: "blockquote-footer float-right",
+                          attrs: { title: "Group Admin" }
+                        },
+                        [_vm._v("Member")]
+                      )
+                    ]),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "card-body" }, [
+                      _c("p", { staticClass: "card-title" }, [
+                        _vm._v(_vm._s(comment.created_at) + ".")
+                      ]),
+                      _vm._v(" "),
+                      _c("h5", [_vm._v(_vm._s(comment.text))]),
+                      _vm._v(" "),
+                      _c("hr")
+                    ])
+                  ]
+                )
+              }),
+              _vm._v(" "),
+              _c("div", { staticClass: "container text-center" }, [
+                _vm.loadMore == true
+                  ? _c(
+                      "div",
+                      {
+                        staticClass: "btn btn-primary",
+                        on: { click: _vm.infiniteHandler }
+                      },
+                      [_vm._v("LoadMore")]
+                    )
+                  : _vm._e()
+              ]),
+              _vm._v(" "),
+              _vm._m(0)
+            ],
+            2
+          )
+        ]
+      )
+    ]
+  )
+}
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "modal-footer" }, [
+      _c("input", {
+        staticClass: "form-control",
+        staticStyle: { width: "90%" },
+        attrs: { placeholder: "send a comment", type: "text" }
+      }),
+      _vm._v(" "),
+      _c("i", { staticClass: "far fa-paper-plane active" })
+    ])
+  }
+]
+render._withStripped = true
+
+
+
+/***/ }),
+
 /***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/GroupsViewHome.vue?vue&type=template&id=4cf3db7a&":
 /*!*****************************************************************************************************************************************************************************************************************!*\
   !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/GroupsViewHome.vue?vue&type=template&id=4cf3db7a& ***!
@@ -39702,191 +39960,207 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", { staticClass: "card shadow-none" }, [
-    _c(
-      "div",
-      { staticClass: "card" },
-      [
-        _vm._l(_vm.posts, function(post) {
-          return _c(
-            "div",
-            { key: post.id, staticClass: "row justify-content-center" },
-            [
-              _c("div", { staticClass: "col-md-8" }, [
-                _c("div", { staticClass: "card border-info mb-3" }, [
-                  _c("h5", { staticClass: "card-header" }, [
-                    _c("img", {
-                      staticClass: "rounded-circle",
-                      attrs: { src: "../avatar.jpg", width: "50px", alt: "" }
-                    }),
-                    _vm._v(
-                      "\n            " +
-                        _vm._s(post.user.name) +
-                        "\n            "
-                    )
-                  ]),
-                  _vm._v(" "),
-                  _c("div", { staticClass: "card-body" }, [
-                    _c("p", { staticClass: "card-title text-muted" }, [
-                      _vm._v(_vm._s(post.created_at))
+  return _c(
+    "div",
+    { staticClass: "card shadow-none" },
+    [
+      _c(
+        "div",
+        { staticClass: "card" },
+        [
+          _vm._l(_vm.posts, function(post) {
+            return _c(
+              "div",
+              { key: post.id, staticClass: "row justify-content-center" },
+              [
+                _c("div", { staticClass: "col-md-8" }, [
+                  _c("div", { staticClass: "card border-info mb-3" }, [
+                    _c("h5", { staticClass: "card-header" }, [
+                      _c("img", {
+                        staticClass: "rounded-circle",
+                        attrs: { src: "../avatar.jpg", width: "50px", alt: "" }
+                      }),
+                      _vm._v(
+                        "\n            " +
+                          _vm._s(post.user.name) +
+                          "\n            "
+                      )
                     ]),
                     _vm._v(" "),
-                    _c("h5", [_vm._v(_vm._s(post.text))]),
-                    _vm._v(" "),
-                    _c("hr"),
-                    _vm._v(" "),
-                    _c("div", { attrs: { id: "card-footer" } }, [
-                      post.liked == false
+                    _c("div", { staticClass: "card-body" }, [
+                      _c("p", { staticClass: "card-title text-muted" }, [
+                        _vm._v(_vm._s(post.created_at))
+                      ]),
+                      _vm._v(" "),
+                      _c("h5", [_vm._v(_vm._s(post.text))]),
+                      _vm._v(" "),
+                      post.likes_count > 0
                         ? _c(
-                            "i",
-                            {
-                              staticClass:
-                                "far fa-thumbs-up float-left ml-md-5",
-                              staticStyle: {
-                                color: "#3687CF",
-                                cursor: "pointer"
-                              },
-                              on: {
-                                click: function($event) {
-                                  return _vm.likeButton(post)
-                                }
-                              }
-                            },
-                            [_vm._v("Like")]
-                          )
-                        : _c(
-                            "i",
-                            {
-                              staticClass:
-                                "fas fa-thumbs-up float-left ml-md-5",
-                              staticStyle: { color: "#3687CF" },
-                              on: {
-                                click: function($event) {
-                                  return _vm.dislikeButton(post)
-                                }
-                              }
-                            },
-                            [_vm._v("Like")]
-                          ),
-                      _vm._v(" "),
-                      _c(
-                        "a",
-                        {
-                          attrs: {
-                            "data-toggle": "modal",
-                            "data-target": "#likeModal"
-                          },
-                          on: {
-                            click: function($event) {
-                              return _vm.viewLikes(post.id)
-                            }
-                          }
-                        },
-                        [_vm._v(_vm._s(post.likes_count))]
-                      ),
-                      _vm._v(" "),
-                      _c(
-                        "i",
-                        {
-                          staticClass: "far fa-comment float-right mr-md-5",
-                          staticStyle: { color: "#3687CF" }
-                        },
-                        [
-                          _c(
                             "a",
                             {
                               attrs: {
                                 "data-toggle": "modal",
-                                "data-target": "#exampleModalCenter"
+                                "data-target": "#likeModal"
                               },
                               on: {
                                 click: function($event) {
-                                  return _vm.viewComments(post.id)
+                                  return _vm.viewLikes(post.id)
                                 }
                               }
                             },
-                            [_vm._v("Comments")]
+                            [_vm._v(_vm._s(post.likes_count) + " Likes")]
                           )
-                        ]
-                      )
+                        : _vm._e(),
+                      _vm._v(" "),
+                      _c("hr"),
+                      _vm._v(" "),
+                      _c("div", { attrs: { id: "card-footer" } }, [
+                        post.liked == false
+                          ? _c(
+                              "i",
+                              {
+                                staticClass:
+                                  "far fa-thumbs-up float-left ml-md-5",
+                                staticStyle: {
+                                  color: "#3687CF",
+                                  cursor: "pointer"
+                                },
+                                on: {
+                                  click: function($event) {
+                                    return _vm.likeButton(post)
+                                  }
+                                }
+                              },
+                              [_vm._v("Like")]
+                            )
+                          : _c(
+                              "i",
+                              {
+                                staticClass:
+                                  "fas fa-thumbs-up float-left ml-md-5",
+                                staticStyle: {
+                                  color: "#3687CF",
+                                  cursor: "pointer"
+                                },
+                                on: {
+                                  click: function($event) {
+                                    return _vm.dislikeButton(post)
+                                  }
+                                }
+                              },
+                              [_vm._v("Like")]
+                            ),
+                        _vm._v(" "),
+                        _c(
+                          "i",
+                          {
+                            staticClass: "far fa-comment float-right mr-md-5",
+                            staticStyle: { color: "#3687CF" }
+                          },
+                          [
+                            _c(
+                              "a",
+                              {
+                                attrs: {
+                                  "data-toggle": "modal",
+                                  "data-target": "#exampleModalCenter"
+                                },
+                                on: {
+                                  click: function($event) {
+                                    _vm.component = "comments"
+                                    _vm.post_id = post.id
+                                  }
+                                }
+                              },
+                              [_vm._v("Comments")]
+                            )
+                          ]
+                        )
+                      ])
                     ])
                   ])
                 ])
-              ])
-            ]
-          )
-        }),
-        _vm._v(" "),
-        _c("infinite-loading", {
-          on: {
-            distance: function($event) {
-              1
-            },
-            infinite: _vm.infiniteHandler
+              ]
+            )
+          }),
+          _vm._v(" "),
+          _c("infinite-loading", {
+            on: {
+              distance: function($event) {
+                1
+              },
+              infinite: _vm.infiniteHandler
+            }
+          })
+        ],
+        2
+      ),
+      _vm._v(" "),
+      _c(
+        _vm.component,
+        _vm._b(
+          { key: _vm.post_id, tag: "component" },
+          "component",
+          _vm.currentProperties,
+          false
+        )
+      ),
+      _vm._v(" "),
+      _c(
+        "div",
+        {
+          staticClass: "modal fade",
+          attrs: {
+            id: "likeModal",
+            tabindex: "-1",
+            role: "dialog",
+            "aria-labelledby": "exampleModalCenterTitle",
+            "aria-hidden": "true"
           }
-        })
-      ],
-      2
-    ),
-    _vm._v(" "),
-    _c(
-      "div",
-      {
-        staticClass: "modal fade",
-        attrs: {
-          id: "exampleModalCenter",
-          tabindex: "-1",
-          role: "dialog",
-          "aria-labelledby": "exampleModalCenterTitle",
-          "aria-hidden": "true"
-        }
-      },
-      [
-        _c(
-          "div",
-          {
-            staticClass: "modal-dialog modal-dialog-centered",
-            attrs: { role: "document" }
-          },
-          [
-            _c(
-              "div",
-              { staticClass: "modal-content" },
-              [
-                _c("div", { staticClass: "modal-header" }, [
-                  _c(
-                    "h5",
-                    {
-                      staticClass: "modal-title",
-                      attrs: { id: "exampleModalCenterTitle" }
-                    },
-                    [_vm._v("Comments")]
-                  ),
-                  _vm._v(" "),
-                  _c(
-                    "button",
-                    {
-                      staticClass: "close",
-                      attrs: {
-                        type: "button",
-                        "data-dismiss": "modal",
-                        "aria-label": "Close"
+        },
+        [
+          _c(
+            "div",
+            {
+              staticClass: "modal-dialog modal-dialog-centered",
+              attrs: { role: "document" }
+            },
+            [
+              _c(
+                "div",
+                { staticClass: "modal-content" },
+                [
+                  _c("div", { staticClass: "modal-header" }, [
+                    _c(
+                      "h5",
+                      {
+                        staticClass: "modal-title",
+                        attrs: { id: "exampleModalCenterTitle" }
                       },
-                      on: { click: _vm.hash }
-                    },
-                    [
-                      _c("span", { attrs: { "aria-hidden": "true" } }, [
-                        _vm._v("×")
-                      ])
-                    ]
-                  )
-                ]),
-                _vm._v(" "),
-                _vm._l(_vm.comments, function(comment) {
-                  return _c(
-                    "div",
-                    { key: comment.id, staticClass: "modal-body" },
-                    [
+                      [_vm._v("Likes")]
+                    ),
+                    _vm._v(" "),
+                    _c(
+                      "button",
+                      {
+                        staticClass: "close",
+                        attrs: {
+                          type: "button",
+                          "data-dismiss": "modal",
+                          "aria-label": "Close"
+                        },
+                        on: { click: _vm.hash }
+                      },
+                      [
+                        _c("span", { attrs: { "aria-hidden": "true" } }, [
+                          _vm._v("×")
+                        ])
+                      ]
+                    )
+                  ]),
+                  _vm._v(" "),
+                  _vm._l(_vm.likes, function(like) {
+                    return _c("div", { key: like.id }, [
                       _c("h5", { staticClass: "card-header" }, [
                         _c("img", {
                           staticClass: "rounded-circle",
@@ -39898,7 +40172,7 @@ var render = function() {
                         }),
                         _vm._v(
                           "\n            " +
-                            _vm._s(comment.user.name) +
+                            _vm._s(like.name) +
                             "\n            "
                         ),
                         _c(
@@ -39911,129 +40185,21 @@ var render = function() {
                         )
                       ]),
                       _vm._v(" "),
-                      _c("div", { staticClass: "card-body" }, [
-                        _c("p", { staticClass: "card-title" }, [
-                          _vm._v(_vm._s(comment.created_at) + ".")
-                        ]),
-                        _vm._v(" "),
-                        _c("h5", [_vm._v(_vm._s(comment.text))]),
-                        _vm._v(" "),
-                        _c("hr")
-                      ])
-                    ]
-                  )
-                }),
-                _vm._v(" "),
-                _vm._m(0)
-              ],
-              2
-            )
-          ]
-        )
-      ]
-    ),
-    _vm._v(" "),
-    _c(
-      "div",
-      {
-        staticClass: "modal fade",
-        attrs: {
-          id: "likeModal",
-          tabindex: "-1",
-          role: "dialog",
-          "aria-labelledby": "exampleModalCenterTitle",
-          "aria-hidden": "true"
-        }
-      },
-      [
-        _c(
-          "div",
-          {
-            staticClass: "modal-dialog modal-dialog-centered",
-            attrs: { role: "document" }
-          },
-          [
-            _c(
-              "div",
-              { staticClass: "modal-content" },
-              [
-                _c("div", { staticClass: "modal-header" }, [
-                  _c(
-                    "h5",
-                    {
-                      staticClass: "modal-title",
-                      attrs: { id: "exampleModalCenterTitle" }
-                    },
-                    [_vm._v("Likes")]
-                  ),
-                  _vm._v(" "),
-                  _c(
-                    "button",
-                    {
-                      staticClass: "close",
-                      attrs: {
-                        type: "button",
-                        "data-dismiss": "modal",
-                        "aria-label": "Close"
-                      },
-                      on: { click: _vm.hash }
-                    },
-                    [
-                      _c("span", { attrs: { "aria-hidden": "true" } }, [
-                        _vm._v("×")
-                      ])
-                    ]
-                  )
-                ]),
-                _vm._v(" "),
-                _vm._l(_vm.likes, function(like) {
-                  return _c("div", { key: like.id }, [
-                    _c("h5", { staticClass: "card-header" }, [
-                      _c("img", {
-                        staticClass: "rounded-circle",
-                        attrs: { src: "../avatar.jpg", width: "50px", alt: "" }
-                      }),
-                      _vm._v(
-                        "\n            " + _vm._s(like.name) + "\n            "
-                      ),
-                      _c(
-                        "cite",
-                        {
-                          staticClass: "blockquote-footer float-right",
-                          attrs: { title: "Group Admin" }
-                        },
-                        [_vm._v("Member")]
-                      )
-                    ]),
-                    _vm._v(" "),
-                    _c("p", [_vm._v(_vm._s(like.created_at))])
-                  ])
-                })
-              ],
-              2
-            )
-          ]
-        )
-      ]
-    )
-  ])
+                      _c("p", [_vm._v(_vm._s(like.created_at))])
+                    ])
+                  })
+                ],
+                2
+              )
+            ]
+          )
+        ]
+      )
+    ],
+    1
+  )
 }
-var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "modal-footer" }, [
-      _c("input", {
-        staticClass: "form-control",
-        staticStyle: { width: "90%" },
-        attrs: { placeholder: "send a comment", type: "text" }
-      }),
-      _vm._v(" "),
-      _c("i", { staticClass: "far fa-paper-plane active" })
-    ])
-  }
-]
+var staticRenderFns = []
 render._withStripped = true
 
 
@@ -52246,6 +52412,7 @@ Vue.component("post-component", __webpack_require__(/*! ./components/PostCompone
 Vue.component("home-group", __webpack_require__(/*! ./components/HomeGroupComponent.vue */ "./resources/js/components/HomeGroupComponent.vue")["default"]);
 Vue.component("home-nav", __webpack_require__(/*! ./components/HomeNavComponent.vue */ "./resources/js/components/HomeNavComponent.vue")["default"]);
 Vue.component("groups-view-home", __webpack_require__(/*! ./components/GroupsViewHome.vue */ "./resources/js/components/GroupsViewHome.vue")["default"]);
+Vue.component("comments", __webpack_require__(/*! ./components/CommentComponent.vue */ "./resources/js/components/CommentComponent.vue")["default"]);
 Vue.component("InfiniteLoading", __webpack_require__(/*! vue-infinite-loading */ "./node_modules/vue-infinite-loading/dist/vue-infinite-loading.js"));
 /**
  * Next, we will create a fresh Vue application instance and attach it to
@@ -52301,6 +52468,75 @@ window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 //     cluster: process.env.MIX_PUSHER_APP_CLUSTER,
 //     forceTLS: true
 // });
+
+/***/ }),
+
+/***/ "./resources/js/components/CommentComponent.vue":
+/*!******************************************************!*\
+  !*** ./resources/js/components/CommentComponent.vue ***!
+  \******************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _CommentComponent_vue_vue_type_template_id_d6b6866e___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./CommentComponent.vue?vue&type=template&id=d6b6866e& */ "./resources/js/components/CommentComponent.vue?vue&type=template&id=d6b6866e&");
+/* harmony import */ var _CommentComponent_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./CommentComponent.vue?vue&type=script&lang=js& */ "./resources/js/components/CommentComponent.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+/* normalize component */
+
+var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
+  _CommentComponent_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _CommentComponent_vue_vue_type_template_id_d6b6866e___WEBPACK_IMPORTED_MODULE_0__["render"],
+  _CommentComponent_vue_vue_type_template_id_d6b6866e___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
+  false,
+  null,
+  null,
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/components/CommentComponent.vue"
+/* harmony default export */ __webpack_exports__["default"] = (component.exports);
+
+/***/ }),
+
+/***/ "./resources/js/components/CommentComponent.vue?vue&type=script&lang=js&":
+/*!*******************************************************************************!*\
+  !*** ./resources/js/components/CommentComponent.vue?vue&type=script&lang=js& ***!
+  \*******************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_CommentComponent_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/babel-loader/lib??ref--4-0!../../../node_modules/vue-loader/lib??vue-loader-options!./CommentComponent.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/CommentComponent.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_CommentComponent_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
+/***/ "./resources/js/components/CommentComponent.vue?vue&type=template&id=d6b6866e&":
+/*!*************************************************************************************!*\
+  !*** ./resources/js/components/CommentComponent.vue?vue&type=template&id=d6b6866e& ***!
+  \*************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_CommentComponent_vue_vue_type_template_id_d6b6866e___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../node_modules/vue-loader/lib??vue-loader-options!./CommentComponent.vue?vue&type=template&id=d6b6866e& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/CommentComponent.vue?vue&type=template&id=d6b6866e&");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_CommentComponent_vue_vue_type_template_id_d6b6866e___WEBPACK_IMPORTED_MODULE_0__["render"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_CommentComponent_vue_vue_type_template_id_d6b6866e___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+
+
 
 /***/ }),
 
