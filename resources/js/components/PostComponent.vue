@@ -1,5 +1,3 @@
-
-
 <template>
   <div class="card shadow-none">
     <div class="card">
@@ -8,22 +6,31 @@
           <div class="card border-info mb-3">
             <h5 class="card-header">
               <img :src="'../avatar.jpg'" class="rounded-circle" width="50px" alt />
-              {{post.user.name}}
+              {{ post.user.name }}
               <!-- <cite class="blockquote-footer float-right" title="Group Admin">Member</cite> -->
             </h5>
             <div class="card-body">
-              <p class="card-title text-muted">{{post.created_at}}</p>
-              <h5>{{post.text}}</h5>
+              <p class="card-title text-muted">{{ post.created_at }}</p>
+              <h5>{{ post.text }}</h5>
               <hr />
               <div id="card-footer">
-                <i style="color:#3687CF;" class="far fa-thumbs-up float-left ml-md-5">
-                  Like
-                  <a
-                    data-toggle="modal"
-                    @click="viewLikes(post.id)"
-                    data-target="#likeModal"
-                  >{{ post.likes_count }}</a>
-                </i>
+                <i
+                  v-if="post.liked==false"
+                  @click="likeButton(post)"
+                  style="color:#3687CF; cursor: pointer"
+                  class="far fa-thumbs-up float-left ml-md-5"
+                >Like</i>
+                <i
+                  v-else
+                  @click="dislikeButton(post)"
+                  style="color:#3687CF;"
+                  class="fas fa-thumbs-up float-left ml-md-5"
+                >Like</i>
+                <a
+                  data-toggle="modal"
+                  @click="viewLikes(post.id)"
+                  data-target="#likeModal"
+                >{{ post.likes_count }}</a>
                 <i style="color:#3687CF;" class="far fa-comment float-right mr-md-5">
                   <a
                     data-toggle="modal"
@@ -64,15 +71,15 @@
           <div v-for="comment in comments" :key="comment.id" class="modal-body">
             <h5 class="card-header">
               <img :src="'../avatar.jpg'" class="rounded-circle" width="50px" alt />
-              {{comment.user.name}}
+              {{ comment.user.name }}
               <cite
                 class="blockquote-footer float-right"
                 title="Group Admin"
               >Member</cite>
             </h5>
             <div class="card-body">
-              <p class="card-title">{{comment.created_at}}.</p>
-              <h5>{{comment.text}}</h5>
+              <p class="card-title">{{ comment.created_at }}.</p>
+              <h5>{{ comment.text }}</h5>
               <hr />
             </div>
           </div>
@@ -111,13 +118,13 @@
           <div v-for="like in likes" :key="like.id">
             <h5 class="card-header">
               <img :src="'../avatar.jpg'" class="rounded-circle" width="50px" alt />
-              {{like.name}}
+              {{ like.name }}
               <cite
                 class="blockquote-footer float-right"
                 title="Group Admin"
               >Member</cite>
             </h5>
-            <p>{{like.created_at}}</p>
+            <p>{{ like.created_at }}</p>
           </div>
         </div>
       </div>
@@ -174,6 +181,18 @@ export default {
     hash() {
       window.location.hash = "";
     },
+    likeButton(post) {
+      Vue.axios.post("api/posts/" + post.id + "/like").then((response) => {
+        post.liked = true;
+        post.likes_count += 1;
+      });
+    },
+    dislikeButton(post) {
+      Vue.axios.delete("api/posts/" + post.id + "/like").then((response) => {
+        post.liked = false;
+        post.likes_count -= 1;
+      });
+    },
     viewComments(id) {
       console.log(id);
       this.$http
@@ -181,7 +200,7 @@ export default {
         .then(({ data }) => {
           if (data.data.length) {
             console.log(this.comments);
-            this.comments=[];
+            this.comments = [];
             this.comments.unshift(...data.data);
             console.log(this.comments);
           } else {
@@ -199,7 +218,7 @@ export default {
           if (data.length) {
             console.log("likes");
             console.log(this.likes);
-            this.likes=[];
+            this.likes = [];
             this.likes.unshift(...data);
             console.log(this.likes);
           } else {
@@ -245,29 +264,8 @@ export default {
 };
 </script>
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-// <div class="card-body">
+//
+<div class="card-body">
 //         <p class="card-title">1 hour ago.</p>
 //         <h5>Hello everybody</h5>
 //         <hr>

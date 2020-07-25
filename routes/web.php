@@ -25,6 +25,6 @@ Route::group(['namespace' => 'user', 'prefix' => 'user'], function () {
     Route::get('/api/group-stat', 'HomeController@group_stat');
     Route::get('/api/recent-posts', 'HomeController@recent_posts');
     Route::get('/api/suggested-groups', 'HomeController@suggested_groups');
-    // Route::post('api/posts/{id}/like', 'PostController@addLike');
-    // Route::delete('api/posts/{id}/like', 'PostController@deleteLike');
+    Route::post('api/posts/{id}/like', 'PostController@addLike');
+    Route::delete('api/posts/{id}/like', 'PostController@deleteLike');
 });

@@ -47,6 +47,12 @@ class HomeController extends Controller
     {
         $groups = Auth::user()->groups()->pluck('id');
         $posts = Post::whereIn('group_id', $groups)->with('user')->withCount('likes')->orderBy('created_at', 'desc')->paginate(10);
+        foreach ($posts as $post) {
+            if ($post->likes->contains(Auth::user()->id))
+                $post->liked = true;
+            else
+                $post->liked = false;
+        }
         return response(['data' => $posts]);
     }
 
