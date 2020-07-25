@@ -2169,6 +2169,9 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
 //
 //
 //
+//
+//
+//
 window.onload = function () {
   $("#exampleModalCenter").on("show.bs.modal", function (e) {
     window.location.hash = "modal";
@@ -2218,7 +2221,8 @@ window.onload = function () {
     return {
       commentpage: 1,
       comments: [],
-      loadMore: true
+      loadMore: true,
+      commentText: ""
     };
   },
   methods: {
@@ -2231,23 +2235,42 @@ window.onload = function () {
     close: function close() {
       this.$emit("close");
     },
-    infiniteHandler: function infiniteHandler() {
+    addComment: function addComment() {
       var _this2 = this;
 
+      if (this.commentText != "") {
+        axios.post("addComment", {
+          post_id: this.post_id,
+          text: this.commentText
+        }).then(function (_ref2) {
+          var data = _ref2.data;
+          console.log(data);
+
+          if (data.success) {
+            _this2.comments.unshift(data.comment);
+
+            _this2.commentText = "";
+          }
+        });
+      }
+    },
+    infiniteHandler: function infiniteHandler() {
+      var _this3 = this;
+
       this.loadMore = true;
-      axios.get(this.commenturl + this.post_id + "?page=" + this.commentpage).then(function (_ref2) {
-        var data = _ref2.data;
+      axios.get(this.commenturl + this.post_id + "?page=" + this.commentpage).then(function (_ref3) {
+        var data = _ref3.data;
 
         if (data.data.length) {
-          var _this2$comments;
+          var _this3$comments;
 
-          _this2.commentpage += 1;
+          _this3.commentpage += 1;
 
-          (_this2$comments = _this2.comments).push.apply(_this2$comments, _toConsumableArray(data.data));
+          (_this3$comments = _this3.comments).push.apply(_this3$comments, _toConsumableArray(data.data));
 
-          if (_this2.comments.length == data.total) _this2.loadMore = false;
+          if (_this3.comments.length == data.total) _this3.loadMore = false;
         } else {
-          _this2.loadMore = false;
+          _this3.loadMore = false;
         }
       });
     }
@@ -2600,6 +2623,20 @@ function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) return _arrayLikeToAr
 
 function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
 
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -39407,11 +39444,7 @@ var render = function() {
                             alt: ""
                           }
                         }),
-                        _vm._v(
-                          "\n            " +
-                            _vm._s(comment.user.name) +
-                            "\n            "
-                        ),
+                        _vm._v(" "),
                         _c(
                           "cite",
                           {
@@ -39458,29 +39491,42 @@ var render = function() {
               2
             ),
             _vm._v(" "),
-            _vm._m(0)
+            _c("div", { staticClass: "modal-footer" }, [
+              _c("input", {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.commentText,
+                    expression: "commentText"
+                  }
+                ],
+                staticClass: "form-control",
+                staticStyle: { width: "90%" },
+                attrs: { placeholder: "send a comment", type: "text" },
+                domProps: { value: _vm.commentText },
+                on: {
+                  input: function($event) {
+                    if ($event.target.composing) {
+                      return
+                    }
+                    _vm.commentText = $event.target.value
+                  }
+                }
+              }),
+              _vm._v(" "),
+              _c("i", {
+                staticClass: "far fa-paper-plane active",
+                on: { click: _vm.addComment }
+              })
+            ])
           ])
         ]
       )
     ]
   )
 }
-var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "modal-footer" }, [
-      _c("input", {
-        staticClass: "form-control",
-        staticStyle: { width: "90%" },
-        attrs: { placeholder: "send a comment", type: "text" }
-      }),
-      _vm._v(" "),
-      _c("i", { staticClass: "far fa-paper-plane active" })
-    ])
-  }
-]
+var staticRenderFns = []
 render._withStripped = true
 
 
@@ -40113,7 +40159,13 @@ var render = function() {
                                   }
                                 }
                               },
-                              [_vm._v("Like")]
+                              [
+                                _c(
+                                  "span",
+                                  { staticStyle: { "padding-left": "3px" } },
+                                  [_vm._v("Like")]
+                                )
+                              ]
                             )
                           : _c(
                               "i",
@@ -40130,7 +40182,13 @@ var render = function() {
                                   }
                                 }
                               },
-                              [_vm._v("Like")]
+                              [
+                                _c(
+                                  "span",
+                                  { staticStyle: { "padding-left": "3px" } },
+                                  [_vm._v("Like")]
+                                )
+                              ]
                             ),
                         _vm._v(" "),
                         _c(
@@ -40154,7 +40212,13 @@ var render = function() {
                                   }
                                 }
                               },
-                              [_vm._v("Comments")]
+                              [
+                                _c(
+                                  "span",
+                                  { staticStyle: { "padding-left": "3px" } },
+                                  [_vm._v("Comments")]
+                                )
+                              ]
                             )
                           ]
                         )

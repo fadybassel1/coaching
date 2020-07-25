@@ -1,12 +1,14 @@
 <template >
-
-  <div  class="container-fluid shadow-none">
-    <div style="  width: auto; 
+  <div class="container-fluid shadow-none">
+    <div
+      style="  width: auto; 
                 height:auto;
                 max-height: 700px; 
                 overflow-y: auto;
                 overflow-x:hidden; 
-                text-align:justify;" class="container-fluid scrollbar scrollbar-near-moon">
+                text-align:justify;"
+      class="container-fluid scrollbar scrollbar-near-moon"
+    >
       <div v-for="post in posts" :key="post.id" class="row justify-content-center">
         <div class="container-fluid">
           <div class="card border-info mb-3">
@@ -38,21 +40,27 @@
                 <i
                   v-if="post.liked==false"
                   @click="likeButton(post)"
-                  style="color:#3687CF; cursor: pointer"
+                  style="color:#3687CF; cursor: pointer;"
                   class="far fa-thumbs-up float-left ml-md-5"
-                >Like</i>
+                >
+                  <span style="padding-left:3px;">Like</span>
+                </i>
                 <i
                   v-else
                   @click="dislikeButton(post)"
                   style="color:#3687CF; cursor: pointer;"
                   class="fas fa-thumbs-up float-left ml-md-5"
-                >Like</i>
+                >
+                  <span style="padding-left:3px;">Like</span>
+                </i>
                 <i style="color:#3687CF;" class="far fa-comment float-right mr-md-5">
                   <a
                     v-on:click="component = 'comments'; post_id = post.id;"
                     data-toggle="modal"
                     data-target="#exampleModalCenter"
-                  >Comments</a>
+                  >
+                    <span style="padding-left:3px;">Comments</span>
+                  </a>
                 </i>
               </div>
             </div>

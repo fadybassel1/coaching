@@ -20,11 +20,8 @@
           <div v-for="comment in comments" :key="comment.id" class="card border-primary">
             <h5 class="card-header">
               <img :src="'../avatar.jpg'" class="rounded-circle" width="50px" alt />
-              {{ comment.user.name }}
-              <cite
-                class="blockquote-footer float-right"
-                title="Group Admin"
-              >Member</cite>
+              <!-- {{ comment.user.name }} -->
+              <cite class="blockquote-footer float-right" title="Group Admin">Member</cite>
             </h5>
             <div class="card-body">
               <p class="card-title">{{ comment.created_at }}.</p>
@@ -41,8 +38,14 @@
           </div>
         </div>
         <div class="modal-footer">
-          <input class="form-control" style="width: 90%" placeholder="send a comment" type="text" />
-          <i class="far fa-paper-plane active"></i>
+          <input
+            v-model="commentText"
+            class="form-control"
+            style="width: 90%"
+            placeholder="send a comment"
+            type="text"
+          />
+          <i @click="addComment" class="far fa-paper-plane active"></i>
         </div>
       </div>
     </div>
@@ -97,6 +100,7 @@ export default {
       commentpage: 1,
       comments: [],
       loadMore: true,
+      commentText: "",
     };
   },
   methods: {
@@ -109,7 +113,22 @@ export default {
     close: function () {
       this.$emit("close");
     },
-
+    addComment() {
+      if (this.commentText != "") {
+        axios
+          .post("addComment", {
+            post_id: this.post_id,
+            text: this.commentText,
+          })
+          .then(({ data }) => {
+            console.log(data);
+            if (data.success) {
+              this.comments.unshift(data.comment);
+              this.commentText = "";
+            }
+          });
+      }
+    },
     infiniteHandler() {
       this.loadMore = true;
       axios
