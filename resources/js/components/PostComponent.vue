@@ -1,8 +1,14 @@
 <template >
-  <div class="card shadow-none">
-    <div class="card">
+
+  <div  class="container-fluid shadow-none">
+    <div style="  width: auto; 
+                height:auto;
+                max-height: 700px; 
+                overflow-y: auto;
+                overflow-x:hidden; 
+                text-align:justify;" class="container-fluid scrollbar scrollbar-near-moon">
       <div v-for="post in posts" :key="post.id" class="row justify-content-center">
-        <div class="col-md-8">
+        <div class="container-fluid">
           <div class="card border-info mb-3">
             <h5 class="card-header">
               <img :src="'../avatar.jpg'" class="rounded-circle" width="50px" alt />

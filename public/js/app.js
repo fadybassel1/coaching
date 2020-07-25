@@ -2550,6 +2550,8 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   mounted: function mounted() {
     console.log("Component mounted.");
@@ -2598,6 +2600,12 @@ function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) return _arrayLikeToAr
 
 function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
 
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -39996,18 +40004,28 @@ var render = function() {
   var _c = _vm._self._c || _h
   return _c(
     "div",
-    { staticClass: "card shadow-none" },
+    { staticClass: "container-fluid shadow-none" },
     [
       _c(
         "div",
-        { staticClass: "card" },
+        {
+          staticClass: "container-fluid scrollbar scrollbar-near-moon",
+          staticStyle: {
+            width: "auto",
+            height: "auto",
+            "max-height": "700px",
+            "overflow-y": "auto",
+            "overflow-x": "hidden",
+            "text-align": "justify"
+          }
+        },
         [
           _vm._l(_vm.posts, function(post) {
             return _c(
               "div",
               { key: post.id, staticClass: "row justify-content-center" },
               [
-                _c("div", { staticClass: "col-md-8" }, [
+                _c("div", { staticClass: "container-fluid" }, [
                   _c("div", { staticClass: "card border-info mb-3" }, [
                     _c("h5", { staticClass: "card-header" }, [
                       _c("img", {

@@ -48,7 +48,9 @@
     </div>
     <!-- <post-component posturl='/user/api/recent-posts' commenturl="/admin/post-comment/"> </post-component> -->
     <keep-alive>
+      
       <component :is="component" v-bind="currentProperties"></component>
+     
     </keep-alive>
   </div>
 </template>
