@@ -2162,9 +2162,20 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
 window.onload = function () {
   $("#exampleModalCenter").on("show.bs.modal", function (e) {
     window.location.hash = "modal";
+    $("#exampleModalCenter").modal("handleUpdate");
+    $("#exampleModalCenter").animate({
+      scrollTop: $("#exampleModalCenter .modal-content").height()
+    }, "slow");
   });
   $(window).on("hashchange", function (event) {
     if (window.location.hash != "#modal") {
@@ -2194,6 +2205,10 @@ window.onload = function () {
         _this.commentpage += 1;
 
         (_this$comments = _this.comments).push.apply(_this$comments, _toConsumableArray(data.data));
+
+        _this.handleOpen();
+
+        if (_this.comments.length == data.total) _this.loadMore = false;
       } else {
         _this.loadMore = false;
       }
@@ -2207,6 +2222,9 @@ window.onload = function () {
     };
   },
   methods: {
+    handleOpen: function handleOpen() {
+      this.$refs.myModal.scrollTop = this.$refs.myModal.scrollHeight;
+    },
     hash: function hash() {
       window.location.hash = "";
     },
@@ -2226,6 +2244,8 @@ window.onload = function () {
           _this2.commentpage += 1;
 
           (_this2$comments = _this2.comments).push.apply(_this2$comments, _toConsumableArray(data.data));
+
+          if (_this2.comments.length == data.total) _this2.loadMore = false;
         } else {
           _this2.loadMore = false;
         }
@@ -39309,6 +39329,7 @@ var render = function() {
   return _c(
     "div",
     {
+      ref: "myModal",
       staticClass: "modal fade",
       attrs: {
         id: "exampleModalCenter",
@@ -39322,98 +39343,111 @@ var render = function() {
       _c(
         "div",
         {
-          staticClass: "modal-dialog modal-dialog-centered",
+          staticClass: "modal-dialog modal-dialog-scrollable",
           attrs: { role: "document" }
         },
         [
-          _c(
-            "div",
-            { staticClass: "modal-content" },
-            [
-              _c("div", { staticClass: "modal-header" }, [
-                _c(
-                  "h5",
-                  {
-                    staticClass: "modal-title",
-                    attrs: { id: "exampleModalCenterTitle" }
-                  },
-                  [_vm._v("Comments")]
-                ),
-                _vm._v(" "),
-                _c(
-                  "button",
-                  {
-                    staticClass: "close",
-                    attrs: {
-                      type: "button",
-                      "data-dismiss": "modal",
-                      "aria-label": "Close"
-                    },
-                    on: { click: _vm.hash }
-                  },
-                  [
-                    _c("span", { attrs: { "aria-hidden": "true" } }, [
-                      _vm._v("×")
-                    ])
-                  ]
-                )
-              ]),
+          _c("div", { staticClass: "modal-content" }, [
+            _c("div", { staticClass: "modal-header" }, [
+              _c(
+                "h5",
+                {
+                  staticClass: "modal-title",
+                  attrs: { id: "exampleModalCenterTitle" }
+                },
+                [_vm._v("Comments")]
+              ),
               _vm._v(" "),
-              _vm._l(_vm.comments, function(comment) {
-                return _c(
-                  "div",
-                  { key: comment.id, staticClass: "modal-body" },
-                  [
-                    _c("h5", { staticClass: "card-header" }, [
-                      _c("img", {
-                        staticClass: "rounded-circle",
-                        attrs: { src: "../avatar.jpg", width: "50px", alt: "" }
-                      }),
-                      _vm._v(
-                        "\n          " +
-                          _vm._s(comment.user.name) +
-                          "\n          "
-                      ),
-                      _c(
-                        "cite",
-                        {
-                          staticClass: "blockquote-footer float-right",
-                          attrs: { title: "Group Admin" }
-                        },
-                        [_vm._v("Member")]
-                      )
-                    ]),
-                    _vm._v(" "),
-                    _c("div", { staticClass: "card-body" }, [
-                      _c("p", { staticClass: "card-title" }, [
-                        _vm._v(_vm._s(comment.created_at) + ".")
+              _c(
+                "button",
+                {
+                  staticClass: "close",
+                  attrs: {
+                    type: "button",
+                    "data-dismiss": "modal",
+                    "aria-label": "Close"
+                  },
+                  on: { click: _vm.hash }
+                },
+                [
+                  _c("span", { attrs: { "aria-hidden": "true" } }, [
+                    _vm._v("×")
+                  ])
+                ]
+              )
+            ]),
+            _vm._v(" "),
+            _c(
+              "div",
+              { staticClass: "modal-body" },
+              [
+                _vm._l(_vm.comments, function(comment) {
+                  return _c(
+                    "div",
+                    { key: comment.id, staticClass: "card border-primary" },
+                    [
+                      _c("h5", { staticClass: "card-header" }, [
+                        _c("img", {
+                          staticClass: "rounded-circle",
+                          attrs: {
+                            src: "../avatar.jpg",
+                            width: "50px",
+                            alt: ""
+                          }
+                        }),
+                        _vm._v(
+                          "\n            " +
+                            _vm._s(comment.user.name) +
+                            "\n            "
+                        ),
+                        _c(
+                          "cite",
+                          {
+                            staticClass: "blockquote-footer float-right",
+                            attrs: { title: "Group Admin" }
+                          },
+                          [_vm._v("Member")]
+                        )
                       ]),
                       _vm._v(" "),
-                      _c("h5", [_vm._v(_vm._s(comment.text))]),
-                      _vm._v(" "),
-                      _c("hr")
-                    ])
+                      _c("div", { staticClass: "card-body" }, [
+                        _c("p", { staticClass: "card-title" }, [
+                          _vm._v(_vm._s(comment.created_at) + ".")
+                        ]),
+                        _vm._v(" "),
+                        _c("h5", [_vm._v(_vm._s(comment.text))]),
+                        _vm._v(" "),
+                        _c("hr")
+                      ])
+                    ]
+                  )
+                }),
+                _vm._v(" "),
+                _c(
+                  "div",
+                  {
+                    staticClass: "container text-center",
+                    staticStyle: { "margin-top": "1%" }
+                  },
+                  [
+                    _vm.loadMore == true
+                      ? _c(
+                          "span",
+                          {
+                            staticClass: "badge badge-pill badge-primary",
+                            on: { click: _vm.infiniteHandler }
+                          },
+                          [_vm._v("LoadMore")]
+                        )
+                      : _vm._e()
                   ]
                 )
-              }),
-              _vm._v(" "),
-              _c("div", { staticClass: "container text-center" }, [
-                _vm.loadMore == true
-                  ? _c(
-                      "div",
-                      {
-                        staticClass: "btn btn-primary",
-                        on: { click: _vm.infiniteHandler }
-                      },
-                      [_vm._v("LoadMore")]
-                    )
-                  : _vm._e()
-              ]),
-              _vm._v(" "),
-              _vm._m(0)
-            ],
-            2
-          )
+              ],
+              2
+            ),
+            _vm._v(" "),
+            _vm._m(0)
+          ])
         ]
       )
     ]
@@ -52851,8 +52885,8 @@ __webpack_require__.r(__webpack_exports__);
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! /home/mark/coaching/resources/js/app.js */"./resources/js/app.js");
-module.exports = __webpack_require__(/*! /home/mark/coaching/resources/sass/app.scss */"./resources/sass/app.scss");
+__webpack_require__(/*! /home/fady/coaching/resources/js/app.js */"./resources/js/app.js");
+module.exports = __webpack_require__(/*! /home/fady/coaching/resources/sass/app.scss */"./resources/sass/app.scss");
 
 
 /***/ })

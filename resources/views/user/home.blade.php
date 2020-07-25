@@ -9,7 +9,7 @@
 <div id="app">
   <div class="container-fluid">
 
-    <div class="row">
+    <div  class="row">
       <!-- Sidebar Widgets Column -->
       <home-group></home-group>
       <div class="col-lg-7">

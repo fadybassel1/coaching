@@ -1,5 +1,6 @@
 <template>
   <div
+    ref="myModal"
     class="modal fade"
     id="exampleModalCenter"
     tabindex="-1"
@@ -7,7 +8,7 @@
     aria-labelledby="exampleModalCenterTitle"
     aria-hidden="true"
   >
-    <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-dialog modal-dialog-scrollable" role="document">
       <div class="modal-content">
         <div class="modal-header">
           <h5 class="modal-title" id="exampleModalCenterTitle">Comments</h5>
@@ -15,23 +16,29 @@
             <span aria-hidden="true">×</span>
           </button>
         </div>
-        <div v-for="comment in comments" :key="comment.id" class="modal-body">
-          <h5 class="card-header">
-            <img :src="'../avatar.jpg'" class="rounded-circle" width="50px" alt />
-            {{ comment.user.name }}
-            <cite
-              class="blockquote-footer float-right"
-              title="Group Admin"
-            >Member</cite>
-          </h5>
-          <div class="card-body">
-            <p class="card-title">{{ comment.created_at }}.</p>
-            <h5>{{ comment.text }}</h5>
-            <hr />
+        <div class="modal-body">
+          <div v-for="comment in comments" :key="comment.id" class="card border-primary">
+            <h5 class="card-header">
+              <img :src="'../avatar.jpg'" class="rounded-circle" width="50px" alt />
+              {{ comment.user.name }}
+              <cite
+                class="blockquote-footer float-right"
+                title="Group Admin"
+              >Member</cite>
+            </h5>
+            <div class="card-body">
+              <p class="card-title">{{ comment.created_at }}.</p>
+              <h5>{{ comment.text }}</h5>
+              <hr />
+            </div>
           </div>
-        </div>
-        <div class="container text-center">
-          <div v-if="loadMore == true" @click="infiniteHandler" class="btn btn-primary">LoadMore</div>
+          <div style="margin-top:1%;" class="container text-center">
+            <span
+              v-if="loadMore == true"
+              @click="infiniteHandler"
+              class="badge badge-pill badge-primary"
+            >LoadMore</span>
+          </div>
         </div>
         <div class="modal-footer">
           <input class="form-control" style="width: 90%" placeholder="send a comment" type="text" />
@@ -47,6 +54,11 @@
 window.onload = function () {
   $("#exampleModalCenter").on("show.bs.modal", function (e) {
     window.location.hash = "modal";
+    $("#exampleModalCenter").modal("handleUpdate");
+    $("#exampleModalCenter").animate(
+      { scrollTop: $("#exampleModalCenter .modal-content").height() },
+      "slow"
+    );
   });
 
   $(window).on("hashchange", function (event) {
@@ -73,6 +85,8 @@ export default {
         if (data.data.length) {
           this.commentpage += 1;
           this.comments.push(...data.data);
+          this.handleOpen();
+          if (this.comments.length == data.total) this.loadMore = false;
         } else {
           this.loadMore = false;
         }
@@ -86,6 +100,9 @@ export default {
     };
   },
   methods: {
+    handleOpen() {
+      this.$refs.myModal.scrollTop = this.$refs.myModal.scrollHeight;
+    },
     hash() {
       window.location.hash = "";
     },
@@ -101,6 +118,7 @@ export default {
           if (data.data.length) {
             this.commentpage += 1;
             this.comments.push(...data.data);
+            if (this.comments.length == data.total) this.loadMore = false;
           } else {
             this.loadMore = false;
           }

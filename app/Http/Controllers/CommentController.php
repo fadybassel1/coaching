@@ -10,7 +10,7 @@ class CommentController extends Controller
 {
     public function index($post)
     {
-        $comments = Comment::where('post_id', $post)->with('user')->paginate(10);
+        $comments = Comment::where('post_id', $post)->with('user')->orderBy('Created_at','DESC')->paginate(10);
         return \response()->json($comments);
     }
 }
