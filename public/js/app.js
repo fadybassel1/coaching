@@ -2745,6 +2745,38 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 window.onload = function () {
   $("#exampleModalCenter").on("show.bs.modal", function (e) {
     window.location.hash = "modal";
@@ -2793,12 +2825,33 @@ window.onload = function () {
       comments: [],
       likes: [],
       component: "",
-      post_id: -1
+      post_id: -1,
+      newPost: ""
     };
   },
   methods: {
     hash: function hash() {
       window.location.hash = "";
+    },
+    addNewPost: function addNewPost() {
+      var _this = this;
+
+      if (this.newPost != "") {
+        axios.post("addNewPost", {
+          text: this.newPost
+        }).then(function (_ref) {
+          var data = _ref.data;
+          console.log(data);
+
+          if (data.success) {
+            data.post.liked == false;
+
+            _this.posts.unshift(data.post);
+
+            _this.newPost = "";
+          }
+        });
+      }
     },
     increment_comments_count: function increment_comments_count(post_id) {
       var post = this.posts.find(function (o) {
@@ -2819,61 +2872,61 @@ window.onload = function () {
       });
     },
     viewComments: function viewComments(id) {
-      var _this = this;
+      var _this2 = this;
 
       console.log(id);
-      this.$http.get(this.commenturl + id + "?page=" + this.commentpage).then(function (_ref) {
-        var data = _ref.data;
+      this.$http.get(this.commenturl + id + "?page=" + this.commentpage).then(function (_ref2) {
+        var data = _ref2.data;
 
         if (data.data.length) {
-          var _this$comments;
+          var _this2$comments;
 
-          console.log(_this.comments);
-          _this.comments = [];
+          console.log(_this2.comments);
+          _this2.comments = [];
 
-          (_this$comments = _this.comments).unshift.apply(_this$comments, _toConsumableArray(data.data));
+          (_this2$comments = _this2.comments).unshift.apply(_this2$comments, _toConsumableArray(data.data));
 
-          console.log(_this.comments);
+          console.log(_this2.comments);
         } else {
-          _this.comments = [];
+          _this2.comments = [];
         }
       });
     },
     viewLikes: function viewLikes(id) {
-      var _this2 = this;
+      var _this3 = this;
 
       console.log(id);
       console.log(this.likeurl + id + "?page=" + this.likepage);
-      this.$http.get(this.likeurl + id + "?page=" + this.likes).then(function (_ref2) {
-        var data = _ref2.data;
+      this.$http.get(this.likeurl + id + "?page=" + this.likes).then(function (_ref3) {
+        var data = _ref3.data;
         console.log(data);
 
         if (data.data.length) {
-          var _this2$likes;
+          var _this3$likes;
 
           console.log("likes");
-          console.log(_this2.likes);
-          _this2.likes = [];
+          console.log(_this3.likes);
+          _this3.likes = [];
 
-          (_this2$likes = _this2.likes).unshift.apply(_this2$likes, _toConsumableArray(data.data));
+          (_this3$likes = _this3.likes).unshift.apply(_this3$likes, _toConsumableArray(data.data));
 
-          console.log(_this2.likes);
+          console.log(_this3.likes);
         } else {
-          _this2.likes = [];
+          _this3.likes = [];
         }
       });
     },
     infiniteHandler: function infiniteHandler($state) {
-      var _this3 = this;
+      var _this4 = this;
 
       var lock = true;
       var vm = this;
       console.log(this.posturl);
-      this.$http.get(this.posturl + "?page=" + this.page).then(function (_ref3) {
-        var data = _ref3.data;
+      this.$http.get(this.posturl + "?page=" + this.page).then(function (_ref4) {
+        var data = _ref4.data;
 
         if (data.data.data.length) {
-          _this3.page += 1;
+          _this4.page += 1;
           $.each(data.data.data, function (key, value) {
             console.log(value);
             vm.posts.push(value);
@@ -40083,6 +40136,63 @@ var render = function() {
           }
         },
         [
+          _c("div", { staticClass: "row justify-content-center" }, [
+            _c("div", { staticClass: "container-fluid" }, [
+              _c("div", { staticClass: "card border-info mb-3" }, [
+                _c("h5", { staticClass: "card-header" }, [
+                  _c("img", {
+                    staticClass: "rounded-circle",
+                    attrs: { src: "../avatar.jpg", width: "50px", alt: "" }
+                  }),
+                  _vm._v(
+                    '\n            Mark "STATIC" "GROUP ID STATIC 1"\n            '
+                  )
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "card-body" }, [
+                  _c("div", { staticClass: "d-flex" }, [
+                    _c("input", {
+                      directives: [
+                        {
+                          name: "model",
+                          rawName: "v-model",
+                          value: _vm.newPost,
+                          expression: "newPost"
+                        }
+                      ],
+                      staticClass: "form-control",
+                      attrs: {
+                        type: "text",
+                        name: "newPost",
+                        id: "newPost",
+                        placeholder: "Aktb aly nfsk fih"
+                      },
+                      domProps: { value: _vm.newPost },
+                      on: {
+                        input: function($event) {
+                          if ($event.target.composing) {
+                            return
+                          }
+                          _vm.newPost = $event.target.value
+                        }
+                      }
+                    })
+                  ]),
+                  _vm._v(" "),
+                  _c("hr"),
+                  _vm._v(" "),
+                  _c("div", { attrs: { id: "card-footer" } }, [
+                    _c("input", {
+                      staticClass: "btn btn-primary btn-sm float-right",
+                      attrs: { type: "button", value: "Post" },
+                      on: { click: _vm.addNewPost }
+                    })
+                  ])
+                ])
+              ])
+            ])
+          ]),
+          _vm._v(" "),
           _vm._l(_vm.posts, function(post) {
             return _c(
               "div",

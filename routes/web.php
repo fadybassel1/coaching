@@ -27,5 +27,6 @@ Route::group(['namespace' => 'user', 'prefix' => 'user'], function () {
     Route::get('/api/suggested-groups', 'HomeController@suggested_groups');
     Route::post('api/posts/{id}/like', 'PostController@addLike');
     Route::delete('api/posts/{id}/like', 'PostController@deleteLike');
+    Route::post('/addNewPost', 'PostController@addNewPost');
 });
 Route::post('user/addComment', 'CommentController@addComment');

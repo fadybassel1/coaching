@@ -9,6 +9,38 @@
                 text-align:justify;"
       class="container-fluid scrollbar scrollbar-near-moon"
     >
+      <div class="row justify-content-center">
+        <div class="container-fluid">
+          <div class="card border-info mb-3">
+            <h5 class="card-header">
+              <img :src="'../avatar.jpg'" class="rounded-circle" width="50px" alt />
+              Mark "STATIC" "GROUP ID STATIC 1"
+              <!-- <cite class="blockquote-footer float-right" title="Group Admin">Member</cite> -->
+            </h5>
+            <div class="card-body">
+              <div class="d-flex">
+                <input
+                  type="text"
+                  name="newPost"
+                  id="newPost"
+                  v-model="newPost"
+                  class="form-control"
+                  placeholder="Aktb aly nfsk fih"
+                />
+              </div>
+              <hr />
+              <div id="card-footer">
+                <input
+                  @click="addNewPost"
+                  type="button"
+                  value="Post"
+                  class="btn btn-primary btn-sm float-right"
+                />
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
       <div v-for="post in posts" :key="post.id" class="row justify-content-center">
         <div class="container-fluid">
           <div class="card border-info mb-3">
@@ -171,11 +203,28 @@ export default {
       likes: [],
       component: "",
       post_id: -1,
+      newPost: "",
     };
   },
   methods: {
     hash() {
       window.location.hash = "";
+    },
+    addNewPost() {
+      if (this.newPost != "") {
+        axios
+          .post("addNewPost", {
+            text: this.newPost,
+          })
+          .then(({ data }) => {
+            console.log(data);
+            if (data.success) {
+              data.post.liked == false;
+              this.posts.unshift(data.post);
+              this.newPost = "";
+            }
+          });
+      }
     },
     increment_comments_count(post_id) {
       let post = this.posts.find((o) => o.id === post_id);

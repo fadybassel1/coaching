@@ -6,6 +6,7 @@ use App\models\Post;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Http\Resources\Post as postResource;
+use Exception;
 use Illuminate\Support\Facades\Auth;
 
 class PostController extends Controller
@@ -14,6 +15,21 @@ class PostController extends Controller
    {
       $posts = Post::orderBy('id')->with('user')->paginate(10);
       return postResource::collection($posts);
+   }
+
+   public function addNewPost(Request $request)
+   {
+      try {
+         $post = new Post();
+         $post->user_id = Auth::user()->id;
+         $post->group_id = 1;
+         $post->text = $request['text'];
+         $post->user->name = Auth::user()->name;
+         $post->save();
+         return ['success' => true, 'post' => $post];
+      } catch (Exception $e) {
+         return ['success' => false];
+      }
    }
 
    public function addLike($postID)
