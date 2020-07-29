@@ -15,7 +15,7 @@ background-color: #F5F5F5;
 border-radius: 10px; }
 
 .scrollbar-near-moon::-webkit-scrollbar {
-width: 12px;
+width: 8px;
 background-color: #F5F5F5; }
 
 .scrollbar-near-moon::-webkit-scrollbar-thumb {

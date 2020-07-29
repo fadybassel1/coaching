@@ -2732,51 +2732,6 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 window.onload = function () {
   $("#exampleModalCenter").on("show.bs.modal", function (e) {
     window.location.hash = "modal";
@@ -39494,7 +39449,7 @@ var render = function() {
             _vm._v(" "),
             _c(
               "div",
-              { staticClass: "modal-body" },
+              { staticClass: "scrollbar scrollbar-near-moon modal-body" },
               [
                 _vm._l(_vm.comments, function(comment) {
                   return _c(
@@ -53124,8 +53079,8 @@ __webpack_require__.r(__webpack_exports__);
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! /home/mark/coaching/resources/js/app.js */"./resources/js/app.js");
-module.exports = __webpack_require__(/*! /home/mark/coaching/resources/sass/app.scss */"./resources/sass/app.scss");
+__webpack_require__(/*! /home/fady/coaching/resources/js/app.js */"./resources/js/app.js");
+module.exports = __webpack_require__(/*! /home/fady/coaching/resources/sass/app.scss */"./resources/sass/app.scss");
 
 
 /***/ })

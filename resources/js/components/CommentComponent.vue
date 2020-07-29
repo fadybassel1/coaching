@@ -16,7 +16,7 @@
             <span aria-hidden="true">×</span>
           </button>
         </div>
-        <div class="modal-body">
+        <div class="scrollbar scrollbar-near-moon modal-body">
           <div v-for="comment in comments" :key="comment.id" class="card border-primary">
             <h5 class="card-header">
               <img :src="'../avatar.jpg'" class="rounded-circle" width="50px" alt />
