@@ -219,7 +219,9 @@ export default {
           .then(({ data }) => {
             console.log(data);
             if (data.success) {
-              data.post.liked == false;
+              data.post.liked = false;
+              data.post.likes_count = 0;
+              data.post.comments_count = 0;
               this.posts.unshift(data.post);
               this.newPost = "";
             }

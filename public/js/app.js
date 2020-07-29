@@ -2732,6 +2732,51 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 window.onload = function () {
   $("#exampleModalCenter").on("show.bs.modal", function (e) {
     window.location.hash = "modal";
@@ -2799,7 +2844,9 @@ window.onload = function () {
           console.log(data);
 
           if (data.success) {
-            data.post.liked == false;
+            data.post.liked = false;
+            data.post.likes_count = 0;
+            data.post.comments_count = 0;
 
             _this.posts.unshift(data.post);
 
@@ -53079,8 +53126,8 @@ __webpack_require__.r(__webpack_exports__);
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! /home/fady/coaching/resources/js/app.js */"./resources/js/app.js");
-module.exports = __webpack_require__(/*! /home/fady/coaching/resources/sass/app.scss */"./resources/sass/app.scss");
+__webpack_require__(/*! /home/mark/coaching/resources/js/app.js */"./resources/js/app.js");
+module.exports = __webpack_require__(/*! /home/mark/coaching/resources/sass/app.scss */"./resources/sass/app.scss");
 
 
 /***/ })
