@@ -20,8 +20,11 @@
           <div v-for="comment in comments" :key="comment.id" class="card border-primary">
             <h5 class="card-header">
               <img :src="'../avatar.jpg'" class="rounded-circle" width="50px" alt />
-              <!-- {{ comment.user.name }} -->
-              <cite class="blockquote-footer float-right" title="Group Admin">Member</cite>
+              {{ comment.user.name }}
+              <cite
+                class="blockquote-footer float-right"
+                title="Group Admin"
+              >Member</cite>
             </h5>
             <div class="card-body">
               <p class="card-title">{{ comment.created_at }}.</p>

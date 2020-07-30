@@ -56,8 +56,8 @@
                 <a
                   v-if="post.likes_count > 0"
                   data-toggle="modal"
-                  @click="viewLikes(post.id)"
                   data-target="#likeModal"
+                  v-on:click="component = 'likes'; post_id = post.id;"
                 >{{ post.likes_count }} Likes</a>
                 <a
                   v-if="post.comments_count > 0"
@@ -101,53 +101,15 @@
       </div>
       <infinite-loading @distance="1" @infinite="infiniteHandler"></infinite-loading>
     </div>
-    <!-- COMMENT MODEL -->
+    <!-- COMMENT AND LIKE MODEL -->
     <component
       :is="component"
       v-bind="currentProperties"
       :key="post_id"
       @commentAdded="increment_comments_count"
     ></component>
-    <!-- END COMMENT MODEL -->
-    <!-- LIKE MODEL -->
-    <div
-      class="modal fade"
-      id="likeModal"
-      tabindex="-1"
-      role="dialog"
-      aria-labelledby="exampleModalCenterTitle"
-      aria-hidden="true"
-    >
-      <div class="modal-dialog modal-dialog-centered" role="document">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h5 class="modal-title" id="exampleModalCenterTitle">Likes</h5>
-            <button
-              type="button"
-              class="close"
-              data-dismiss="modal"
-              @click="hash"
-              aria-label="Close"
-            >
-              <span aria-hidden="true">×</span>
-            </button>
-          </div>
-          <div v-for="like in likes" :key="like.id">
-            <h5 class="card-header">
-              <img :src="'../avatar.jpg'" class="rounded-circle" width="50px" alt />
-              {{ like.name }}
-              <cite
-                class="blockquote-footer float-right"
-                title="Group Admin"
-              >Member</cite>
-            </h5>
-            <p>{{ like.created_at }}</p>
-          </div>
-        </div>
-      </div>
-    </div>
+    <!-- END COMMENT AND LIKE MODEL -->
   </div>
-  <!-- END LIKE MODEL -->
 </template>
 
 <script>
@@ -175,10 +137,17 @@ export default {
   },
   computed: {
     currentProperties: function () {
-      return {
-        commenturl: this.commenturl,
-        post_id: this.post_id,
-      };
+      if (this.component == "comments") {
+        return {
+          commenturl: this.commenturl,
+          post_id: this.post_id,
+        };
+      } else if (this.component == "likes") {
+        return {
+          likeurl: this.likeurl,
+          post_id: this.post_id,
+        };
+      }
     },
   },
 
@@ -243,40 +212,6 @@ export default {
         post.liked = false;
         post.likes_count -= 1;
       });
-    },
-    viewComments(id) {
-      console.log(id);
-      this.$http
-        .get(this.commenturl + id + "?page=" + this.commentpage)
-        .then(({ data }) => {
-          if (data.data.length) {
-            console.log(this.comments);
-            this.comments = [];
-            this.comments.unshift(...data.data);
-            console.log(this.comments);
-          } else {
-            this.comments = [];
-          }
-        });
-    },
-
-    viewLikes(id) {
-      console.log(id);
-      console.log(this.likeurl + id + "?page=" + this.likepage);
-      this.$http
-        .get(this.likeurl + id + "?page=" + this.likes)
-        .then(({ data }) => {
-          console.log(data);
-          if (data.data.length) {
-            console.log("likes");
-            console.log(this.likes);
-            this.likes = [];
-            this.likes.unshift(...data.data);
-            console.log(this.likes);
-          } else {
-            this.likes = [];
-          }
-        });
     },
 
     infiniteHandler($state) {
