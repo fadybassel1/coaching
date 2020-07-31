@@ -46,4 +46,9 @@ class User extends Authenticatable
     {
         return $this->belongsToMany('App\models\Posts', 'user_post_like', 'user_id', 'post_id');
     }
+
+    public function requests()
+    {
+        return $this->belongsToMany('App\models\Group','group_request');
+    }
 }
