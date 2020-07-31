@@ -56,7 +56,10 @@
                   <div class="text">
                     <span>{{ post.user.name }}</span>
                     <br />
-                    <span style="color:grey; font-size:18px;">{{ post.group.name }}</span>
+                    <a
+                      :href="'/user/group/'+post.group.id"
+                      style="color:grey; font-size:18px;"
+                    >{{ post.group.name }}</a>
                   </div>
                 </div>
               </div>

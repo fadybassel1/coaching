@@ -3187,6 +3187,9 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
 window.onload = function () {
   $("#exampleModalCenter").on("show.bs.modal", function (e) {
     window.location.hash = "modal";
@@ -41052,11 +41055,14 @@ var render = function() {
                                   _c("br"),
                                   _vm._v(" "),
                                   _c(
-                                    "span",
+                                    "a",
                                     {
                                       staticStyle: {
                                         color: "grey",
                                         "font-size": "18px"
+                                      },
+                                      attrs: {
+                                        href: "/user/group/" + post.group.id
                                       }
                                     },
                                     [_vm._v(_vm._s(post.group.name))]
