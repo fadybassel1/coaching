@@ -34,4 +34,9 @@ class Post extends Model
     {
         return $this->hasMany('App\models\Image');
     }
+
+    public function group()
+    {
+        return $this->belongsTo('App\models\Group');
+    }
 }

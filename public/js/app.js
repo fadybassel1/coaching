@@ -3173,6 +3173,20 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 window.onload = function () {
   $("#exampleModalCenter").on("show.bs.modal", function (e) {
     window.location.hash = "modal";
@@ -3217,13 +3231,12 @@ window.onload = function () {
           post_id: this.post_id
         };
       } else return {};
+    },
+    url: function url() {
+      return window.location.pathname;
     }
   },
   mounted: function mounted() {
-    if (window.location.pathname == "/user/home") {
-      document.getElementById("addNewPost").style.display = "none";
-    }
-
     console.log("Component mounted."); // $("#exampleModalCenter").on("hidden.bs.modal", function () {
     //   this.comments = [];
     //   console.log(this.comments);
@@ -40936,80 +40949,75 @@ var render = function() {
           }
         },
         [
-          _c(
-            "div",
-            {
-              staticClass: "row justify-content-center",
-              attrs: { id: "addNewPost" }
-            },
-            [
-              _c("div", { staticClass: "container-fluid" }, [
-                _c("div", { staticClass: "card border-info mb-3" }, [
-                  _c("h5", { staticClass: "card-header" }, [
-                    _c("img", {
-                      staticClass: "rounded-circle",
-                      attrs: { src: "/../avatar.jpg", width: "50px", alt: "" }
-                    }),
-                    _vm._v(
-                      '\n            Mark "STATIC" "GROUP ID STATIC 1"\n            '
-                    )
-                  ]),
-                  _vm._v(" "),
-                  _c("div", { staticClass: "card-body" }, [
-                    _c("div", { staticClass: "d-flex" }, [
-                      _c(
-                        "a",
-                        {
-                          staticStyle: { width: "100%" },
-                          attrs: {
-                            "data-toggle": "modal",
-                            "data-target": "#createPostModal"
-                          },
-                          on: {
-                            click: function($event) {
-                              _vm.component = "create-post"
-                            }
-                          }
-                        },
-                        [
-                          _c("input", {
-                            directives: [
-                              {
-                                name: "model",
-                                rawName: "v-model",
-                                value: _vm.newPost,
-                                expression: "newPost"
-                              }
-                            ],
-                            staticClass: "form-control",
-                            attrs: {
-                              type: "text",
-                              name: "newPost",
-                              id: "newPost",
-                              placeholder: "Aktb aly nfsk fih"
-                            },
-                            domProps: { value: _vm.newPost },
-                            on: {
-                              input: function($event) {
-                                if ($event.target.composing) {
-                                  return
-                                }
-                                _vm.newPost = $event.target.value
-                              }
-                            }
-                          })
-                        ]
+          _vm.url != "/user/home"
+            ? _c("div", { staticClass: "row justify-content-center" }, [
+                _c("div", { staticClass: "container-fluid" }, [
+                  _c("div", { staticClass: "card border-info mb-3" }, [
+                    _c("h5", { staticClass: "card-header" }, [
+                      _c("img", {
+                        staticClass: "rounded-circle",
+                        attrs: { src: "/../avatar.jpg", width: "50px", alt: "" }
+                      }),
+                      _vm._v(
+                        '\n            Mark "STATIC" "GROUP ID STATIC 1"\n            '
                       )
                     ]),
                     _vm._v(" "),
-                    _c("hr"),
-                    _vm._v(" "),
-                    _vm._m(0)
+                    _c("div", { staticClass: "card-body" }, [
+                      _c("div", { staticClass: "d-flex" }, [
+                        _c(
+                          "a",
+                          {
+                            staticStyle: { width: "100%" },
+                            attrs: {
+                              "data-toggle": "modal",
+                              "data-target": "#createPostModal"
+                            },
+                            on: {
+                              click: function($event) {
+                                _vm.component = "create-post"
+                              }
+                            }
+                          },
+                          [
+                            _c("input", {
+                              directives: [
+                                {
+                                  name: "model",
+                                  rawName: "v-model",
+                                  value: _vm.newPost,
+                                  expression: "newPost"
+                                }
+                              ],
+                              staticClass: "form-control",
+                              attrs: {
+                                type: "text",
+                                name: "newPost",
+                                id: "newPost",
+                                placeholder: "Aktb aly nfsk fih"
+                              },
+                              domProps: { value: _vm.newPost },
+                              on: {
+                                input: function($event) {
+                                  if ($event.target.composing) {
+                                    return
+                                  }
+                                  _vm.newPost = $event.target.value
+                                }
+                              }
+                            })
+                          ]
+                        )
+                      ]),
+                      _vm._v(" "),
+                      _c("hr"),
+                      _vm._v(" "),
+                      _vm._m(0)
+                    ])
                   ])
                 ])
               ])
-            ]
-          ),
+            : _vm._e(),
           _vm._v(" "),
           _vm._l(_vm.posts, function(post) {
             return _c(
@@ -41019,15 +41027,59 @@ var render = function() {
                 _c("div", { staticClass: "container-fluid" }, [
                   _c("div", { staticClass: "card border-info mb-3" }, [
                     _c("h5", { staticClass: "card-header" }, [
-                      _c("img", {
-                        staticClass: "rounded-circle",
-                        attrs: { src: "/../avatar.jpg", width: "50px", alt: "" }
-                      }),
-                      _vm._v(
-                        "\n            " +
-                          _vm._s(post.user.name) +
-                          "\n            "
-                      )
+                      _vm.url == "/user/home"
+                        ? _c(
+                            "div",
+                            {
+                              staticClass: "row",
+                              staticStyle: { "padding-left": "15px" }
+                            },
+                            [
+                              _c("div", [
+                                _c("img", {
+                                  staticClass: "rounded-circle",
+                                  attrs: {
+                                    src: "/../avatar.jpg",
+                                    width: "50px"
+                                  }
+                                })
+                              ]),
+                              _vm._v(" "),
+                              _c("div", { staticClass: "col-md-6" }, [
+                                _c("div", { staticClass: "text" }, [
+                                  _c("span", [_vm._v(_vm._s(post.user.name))]),
+                                  _vm._v(" "),
+                                  _c("br"),
+                                  _vm._v(" "),
+                                  _c(
+                                    "span",
+                                    {
+                                      staticStyle: {
+                                        color: "grey",
+                                        "font-size": "18px"
+                                      }
+                                    },
+                                    [_vm._v(_vm._s(post.group.name))]
+                                  )
+                                ])
+                              ])
+                            ]
+                          )
+                        : _c("div", [
+                            _c("img", {
+                              staticClass: "rounded-circle",
+                              attrs: {
+                                src: "/../avatar.jpg",
+                                width: "50px",
+                                alt: ""
+                              }
+                            }),
+                            _vm._v(
+                              "\n              " +
+                                _vm._s(post.user.name) +
+                                "\n            "
+                            )
+                          ])
                     ]),
                     _vm._v(" "),
                     _c(
