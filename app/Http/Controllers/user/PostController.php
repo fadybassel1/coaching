@@ -15,6 +15,7 @@ class PostController extends Controller
    public function index()
    {
       $posts = Post::orderBy('id')->with('user')->paginate(10);
+      
       return postResource::collection($posts);
    }
 

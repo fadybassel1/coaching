@@ -1,93 +1,138 @@
 <template>
-
- <div id="carouselExampleControls1" class="carousel slide" data-ride="carousel">
-      For Testinggg
-      <div  class="carousel-inner">
-         <div class="carousel-item active">
-           <div class="card-body text-center">
-             Popular Groups
-           </div>
-         </div>
-         <div class="container-fluid">
-        <div v-for="popularg in popularGroups" :key="popularg.id" class="carousel-item">
-          <div class="card mb-3" style="max-width: 540px;">
-            <div class="row no-gutters">
-              <div class="col-md-4">
-                <img :src="'../avatar.jpg'" class="card-img" alt="..." />
-              </div>
-              <div class="col-md-8">
-                <div class="card-body">
-                  <h5 class="card-title">{{popularg.name}}</h5>
-                  <p
-                    class="card-text"
-                  >Has {{popularg.users_count}} Members.</p>
-                  <p class="card-text">
-                   <a class="btn btn-outline-primary btn-sm btn-block" href="">Join</a>
-                  </p>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-        </div>
-      </div>
-      <a
-        class="carousel-control-prev"
-        href="#carouselExampleControls1"
-        role="button"
-        data-slide="prev"
-      >
-        <span class="carousel-control-prev-icon blue" aria-hidden="true"></span>
-        <span class="sr-only">Previous</span>
-      </a>
-      <a
-        class="carousel-control-next"
-        href="#carouselExampleControls1"
-        role="button"
-        data-slide="next"
-      >
-        <span class="carousel-control-next-icon blue" aria-hidden="true"></span>
-        <span class="sr-only">Next</span>
-      </a>
+  <div class="container-fluid my-5" align="center">
+    <div class="row">
+    
+        <input
+         v-model="search" @keyup="searchGroups" class="form-control form-control-sm mr-3 w-75"
+          type="text"
+          placeholder="Search"
+          aria-label="Search"
+        />
+        <i class="fas fa-search" aria-hidden="true"></i>
+     
     </div>
 
-               
+       <div class="row">
+      <div class="card" style="width: 16rem; margin:1%" v-for="result in searchResults" :key="result.id">
+        <div class="text-center">
+          <img
+           v-if="result.photo" :src="'../groups_images/'+result.photo"
+            style="max-width:150px; margin:0 auto;"
+            class="card-img-top"
+            alt="..."
+          />
+            <img
+           v-else :src="'../groups_images/404.png'"
+            style="max-width:150px; margin:0 auto;"
+            class="card-img-top"
+            alt="..."
+          />
+          
+        <div class="card-body"> 
+            <p class="card-text">{{result.name}}</p>
+          </div>
+           <div class="card-footer"> 
+            <a :href="'/user/group/'+result.id" class="btn btn-primary btn-sm">View</a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <h3 class="font-weight-bold pb-4 mb-0 text-center">Your Groups</h3>
+    <div class="row">
+      <div class="card" style="width: 16rem; margin:1%" v-for="group in userGroups" :key="group.id">
+        <div class="text-center">
+          <img
+           v-if="group.photo" :src="'../groups_images/'+group.photo"
+            style="max-width:150px; margin:0 auto;"
+            class="card-img-top"
+            alt="..."
+          />
+            <img
+           v-else :src="'../groups_images/404.png'"
+            style="max-width:150px; margin:0 auto;"
+            class="card-img-top"
+            alt="..."
+          />
+          
+          <div class="card-body">
+            <p class="card-text">{{group.name}}</p>
+          </div>
+            <div class="card-footer"> 
+            <a :href="'/user/group/'+group.id" class="btn btn-primary btn-sm">View</a>
+          </div>
+        </div>
+      </div>
+    </div>
+    <input
+      v-if="loadMore == true"
+      @click="infiniteHandler"
+      type="button"
+      class="btn btn-primary btn-sm"
+      value="load more"
+    />
+  </div>
 </template>
 
 <script>
-import InfiniteLoading from 'vue-infinite-loading';
-   export default { 
-       props: ['id'], 
-         components: {
-     InfiniteLoading,
-     },
-       mounted() {
-            console.log('Component mounted.')
-        }
-    ,data() {
+import InfiniteLoading from "vue-infinite-loading";
+export default {
+  props: ["id"],
+
+  mounted() {
+    console.log("Component mounted.");
+  },
+  data() {
     return {
-      popularGroups: [],
       userGroups: [],
-      suggestedGroups: [],
+      searchResults:[],
+      loadMore: true,
+      page: 1,
+      search:"",
     };
   },
 
-  created: function () {
-    this.$http.get("/user/api/group-stat").then(({ data }) => {
-      if (data.data.popularGroups.length) {
-        this.popularGroups = data.data.popularGroups;
-      }
-    });
+  methods: {
+    searchGroups(){
+      if(this.search.length == 0)
+      this.searchResults=[];
+        if(this.search.length >= 3){
+         axios
+        .get("/user/api/search-groups/" + this.search)
+        .then(({ data }) => {
+          if (data.data.results.length) {
+            this.searchResults=[];
+            this.searchResults=data.data.results;
+          } 
+        });}
+      
+      },
+    infiniteHandler() {
+      this.loadMore = true;
+      axios
+        .get("/user/api/view-user-groups?page=" + this.page)
+        .then(({ data }) => {
+          if (data.data.userGroups.data.length) {
+            this.userGroups.push(...data.data.userGroups.data);
+            if (data.data.userGroups.last_page == this.page)
+              this.loadMore = false;
+            this.page += 1;
+          } else {
+            this.loadMore = false;
+          }
+        });
+    },
   },
-    }
 
-
-
-
-
-
-
-
-
-
+  created: function () {
+    this.$http
+      .get("/user/api/view-user-groups?page=" + this.page)
+      .then(({ data }) => {
+        if (data.data.userGroups.data.length) {
+          this.userGroups = data.data.userGroups.data;
+          this.page += 1;
+        }
+      });
+  },
+};
 </script>

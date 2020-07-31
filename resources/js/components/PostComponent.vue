@@ -13,7 +13,7 @@
         <div class="container-fluid">
           <div class="card border-info mb-3">
             <h5 class="card-header">
-              <img :src="'../avatar.jpg'" class="rounded-circle" width="50px" alt />
+              <img :src="'/../avatar.jpg'" class="rounded-circle" width="50px" alt />
               Mark "STATIC" "GROUP ID STATIC 1"
               <!-- <cite class="blockquote-footer float-right" title="Group Admin">Member</cite> -->
             </h5>
@@ -48,20 +48,20 @@
         <div class="container-fluid">
           <div class="card border-info mb-3">
             <h5 class="card-header">
-              <img :src="'../avatar.jpg'" class="rounded-circle" width="50px" alt />
+              <img :src="'/../avatar.jpg'" class="rounded-circle" width="50px" alt />
               {{ post.user.name }}
               <!-- <cite class="blockquote-footer float-right" title="Group Admin">Member</cite> -->
             </h5>
             <div class="card-body">
               <p class="card-title text-muted">{{ post.created_at }}</p>
               <h5>{{ post.text }}</h5>
-              <div v-for="(image, index) in post.images" :key="index" style="display: inline-block">
+              <div  v-for="(image, index) in post.images" :key="index" style="display: inline-block;">
                 <img
                   width="230"
                   height="230"
                   data-toggle="modal"
                   :data-target="'#a' +image.image_path.split('-')[1].split('.')[0]"
-                  :src="'../images/' + image.image_path"
+                  :src="'/../images/' + image.image_path"
                   style="padding-right: 5px; object-fit: cover;"
                 />
                 <!-- MODAL ENLARGE IMAGE -->
@@ -78,7 +78,7 @@
                         width="800"
                         data-toggle="modal"
                         data-target="#modal2"
-                        :src="'../images/' +image.image_path"
+                        :src="'/../images/' +image.image_path"
                         alt="Card image cap"
                         allowfullscreen
                       />
@@ -238,13 +238,13 @@ export default {
       post.comments_count++;
     },
     likeButton(post) {
-      Vue.axios.post("api/posts/" + post.id + "/like").then((response) => {
+      Vue.axios.post("/user/api/posts/" + post.id + "/like").then((response) => {
         post.liked = true;
         post.likes_count += 1;
       });
     },
     dislikeButton(post) {
-      Vue.axios.delete("api/posts/" + post.id + "/like").then((response) => {
+      Vue.axios.delete("/user/api/posts/" + post.id + "/like").then((response) => {
         post.liked = false;
         post.likes_count -= 1;
       });
@@ -288,14 +288,4 @@ export default {
 };
 </script>
 
-//
-<div class="card-body">
-//         <p class="card-title">1 hour ago.</p>
-//         <h5>Hello everybody</h5>
-//         <hr>
-        
 
-     
-       
-    
-//     </div>

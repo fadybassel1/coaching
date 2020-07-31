@@ -153,7 +153,7 @@ export default {
       console.log("upload triggered FormData=", formData);
       if (this.newPost != "" || this.images.length != 0) {
         axios
-          .post("addNewPost", formData, {
+          .post("/user/addNewPost", formData, {
             onUploadProgress: (uploadEvent) => {
               this.progress = Math.round(
                 (uploadEvent.loaded / uploadEvent.total) * 100

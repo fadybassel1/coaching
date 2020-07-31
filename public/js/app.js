@@ -2473,7 +2473,7 @@ __webpack_require__.r(__webpack_exports__);
       console.log("upload triggered FormData=", formData);
 
       if (this.newPost != "" || this.images.length != 0) {
-        axios__WEBPACK_IMPORTED_MODULE_0___default.a.post("addNewPost", formData, {
+        axios__WEBPACK_IMPORTED_MODULE_0___default.a.post("/user/addNewPost", formData, {
           onUploadProgress: function onUploadProgress(uploadEvent) {
             _this4.progress = Math.round(uploadEvent.loaded / uploadEvent.total * 100);
             console.log("upld prges:" + Math.round(uploadEvent.loaded / uploadEvent.total * 100) + "%");
@@ -2508,6 +2508,38 @@ __webpack_require__.r(__webpack_exports__);
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var vue_infinite_loading__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vue-infinite-loading */ "./node_modules/vue-infinite-loading/dist/vue-infinite-loading.js");
 /* harmony import */ var vue_infinite_loading__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(vue_infinite_loading__WEBPACK_IMPORTED_MODULE_0__);
+function _toConsumableArray(arr) { return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _unsupportedIterableToArray(arr) || _nonIterableSpread(); }
+
+function _nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
+
+function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
+
+function _iterableToArray(iter) { if (typeof Symbol !== "undefined" && Symbol.iterator in Object(iter)) return Array.from(iter); }
+
+function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) return _arrayLikeToArray(arr); }
+
+function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
+
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -2566,28 +2598,65 @@ __webpack_require__.r(__webpack_exports__);
 //
 
 /* harmony default export */ __webpack_exports__["default"] = ({
-  props: ['id'],
-  components: {
-    InfiniteLoading: vue_infinite_loading__WEBPACK_IMPORTED_MODULE_0___default.a
-  },
+  props: ["id"],
   mounted: function mounted() {
-    console.log('Component mounted.');
+    console.log("Component mounted.");
   },
   data: function data() {
     return {
-      popularGroups: [],
       userGroups: [],
-      suggestedGroups: []
+      searchResults: [],
+      loadMore: true,
+      page: 1,
+      search: ""
     };
   },
+  methods: {
+    searchGroups: function searchGroups() {
+      var _this = this;
+
+      if (this.search.length == 0) this.searchResults = [];
+
+      if (this.search.length >= 3) {
+        axios.get("/user/api/search-groups/" + this.search).then(function (_ref) {
+          var data = _ref.data;
+
+          if (data.data.results.length) {
+            _this.searchResults = [];
+            _this.searchResults = data.data.results;
+          }
+        });
+      }
+    },
+    infiniteHandler: function infiniteHandler() {
+      var _this2 = this;
+
+      this.loadMore = true;
+      axios.get("/user/api/view-user-groups?page=" + this.page).then(function (_ref2) {
+        var data = _ref2.data;
+
+        if (data.data.userGroups.data.length) {
+          var _this2$userGroups;
+
+          (_this2$userGroups = _this2.userGroups).push.apply(_this2$userGroups, _toConsumableArray(data.data.userGroups.data));
+
+          if (data.data.userGroups.last_page == _this2.page) _this2.loadMore = false;
+          _this2.page += 1;
+        } else {
+          _this2.loadMore = false;
+        }
+      });
+    }
+  },
   created: function created() {
-    var _this = this;
+    var _this3 = this;
 
-    this.$http.get("/user/api/group-stat").then(function (_ref) {
-      var data = _ref.data;
+    this.$http.get("/user/api/view-user-groups?page=" + this.page).then(function (_ref3) {
+      var data = _ref3.data;
 
-      if (data.data.popularGroups.length) {
-        _this.popularGroups = data.data.popularGroups;
+      if (data.data.userGroups.data.length) {
+        _this3.userGroups = data.data.userGroups.data;
+        _this3.page += 1;
       }
     });
   }
@@ -2606,6 +2675,7 @@ __webpack_require__.r(__webpack_exports__);
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var vue_infinite_loading__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vue-infinite-loading */ "./node_modules/vue-infinite-loading/dist/vue-infinite-loading.js");
 /* harmony import */ var vue_infinite_loading__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(vue_infinite_loading__WEBPACK_IMPORTED_MODULE_0__);
+//
 //
 //
 //
@@ -3188,13 +3258,13 @@ window.onload = function () {
       post.comments_count++;
     },
     likeButton: function likeButton(post) {
-      Vue.axios.post("api/posts/" + post.id + "/like").then(function (response) {
+      Vue.axios.post("/user/api/posts/" + post.id + "/like").then(function (response) {
         post.liked = true;
         post.likes_count += 1;
       });
     },
     dislikeButton: function dislikeButton(post) {
-      Vue.axios["delete"]("api/posts/" + post.id + "/like").then(function (response) {
+      Vue.axios["delete"]("/user/api/posts/" + post.id + "/like").then(function (response) {
         post.liked = false;
         post.likes_count -= 1;
       });
@@ -40220,146 +40290,159 @@ var render = function() {
   var _c = _vm._self._c || _h
   return _c(
     "div",
-    {
-      staticClass: "carousel slide",
-      attrs: { id: "carouselExampleControls1", "data-ride": "carousel" }
-    },
+    { staticClass: "container-fluid my-5", attrs: { align: "center" } },
     [
-      _vm._v("\n     For Testinggg\n     "),
-      _c("div", { staticClass: "carousel-inner" }, [
-        _vm._m(0),
+      _c("div", { staticClass: "row" }, [
+        _c("input", {
+          directives: [
+            {
+              name: "model",
+              rawName: "v-model",
+              value: _vm.search,
+              expression: "search"
+            }
+          ],
+          staticClass: "form-control form-control-sm mr-3 w-75",
+          attrs: {
+            type: "text",
+            placeholder: "Search",
+            "aria-label": "Search"
+          },
+          domProps: { value: _vm.search },
+          on: {
+            keyup: _vm.searchGroups,
+            input: function($event) {
+              if ($event.target.composing) {
+                return
+              }
+              _vm.search = $event.target.value
+            }
+          }
+        }),
         _vm._v(" "),
-        _c(
-          "div",
-          { staticClass: "container-fluid" },
-          _vm._l(_vm.popularGroups, function(popularg) {
-            return _c(
-              "div",
-              { key: popularg.id, staticClass: "carousel-item" },
-              [
-                _c(
-                  "div",
-                  {
-                    staticClass: "card mb-3",
-                    staticStyle: { "max-width": "540px" }
-                  },
-                  [
-                    _c("div", { staticClass: "row no-gutters" }, [
-                      _c("div", { staticClass: "col-md-4" }, [
-                        _c("img", {
-                          staticClass: "card-img",
-                          attrs: { src: "../avatar.jpg", alt: "..." }
-                        })
-                      ]),
-                      _vm._v(" "),
-                      _c("div", { staticClass: "col-md-8" }, [
-                        _c("div", { staticClass: "card-body" }, [
-                          _c("h5", { staticClass: "card-title" }, [
-                            _vm._v(_vm._s(popularg.name))
-                          ]),
-                          _vm._v(" "),
-                          _c("p", { staticClass: "card-text" }, [
-                            _vm._v(
-                              "Has " +
-                                _vm._s(popularg.users_count) +
-                                " Members."
-                            )
-                          ]),
-                          _vm._v(" "),
-                          _vm._m(1, true)
-                        ])
-                      ])
-                    ])
-                  ]
-                )
-              ]
-            )
-          }),
-          0
-        )
+        _c("i", {
+          staticClass: "fas fa-search",
+          attrs: { "aria-hidden": "true" }
+        })
       ]),
       _vm._v(" "),
-      _vm._m(2),
+      _c(
+        "div",
+        { staticClass: "row" },
+        _vm._l(_vm.searchResults, function(result) {
+          return _c(
+            "div",
+            {
+              key: result.id,
+              staticClass: "card",
+              staticStyle: { width: "16rem", margin: "1%" }
+            },
+            [
+              _c("div", { staticClass: "text-center" }, [
+                result.photo
+                  ? _c("img", {
+                      staticClass: "card-img-top",
+                      staticStyle: { "max-width": "150px", margin: "0 auto" },
+                      attrs: {
+                        src: "../groups_images/" + result.photo,
+                        alt: "..."
+                      }
+                    })
+                  : _c("img", {
+                      staticClass: "card-img-top",
+                      staticStyle: { "max-width": "150px", margin: "0 auto" },
+                      attrs: { src: "../groups_images/404.png", alt: "..." }
+                    }),
+                _vm._v(" "),
+                _c("div", { staticClass: "card-body" }, [
+                  _c("p", { staticClass: "card-text" }, [
+                    _vm._v(_vm._s(result.name))
+                  ])
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "card-footer" }, [
+                  _c(
+                    "a",
+                    {
+                      staticClass: "btn btn-primary btn-sm",
+                      attrs: { href: "/user/group/" + result.id }
+                    },
+                    [_vm._v("View")]
+                  )
+                ])
+              ])
+            ]
+          )
+        }),
+        0
+      ),
       _vm._v(" "),
-      _vm._m(3)
+      _c("h3", { staticClass: "font-weight-bold pb-4 mb-0 text-center" }, [
+        _vm._v("Your Groups")
+      ]),
+      _vm._v(" "),
+      _c(
+        "div",
+        { staticClass: "row" },
+        _vm._l(_vm.userGroups, function(group) {
+          return _c(
+            "div",
+            {
+              key: group.id,
+              staticClass: "card",
+              staticStyle: { width: "16rem", margin: "1%" }
+            },
+            [
+              _c("div", { staticClass: "text-center" }, [
+                group.photo
+                  ? _c("img", {
+                      staticClass: "card-img-top",
+                      staticStyle: { "max-width": "150px", margin: "0 auto" },
+                      attrs: {
+                        src: "../groups_images/" + group.photo,
+                        alt: "..."
+                      }
+                    })
+                  : _c("img", {
+                      staticClass: "card-img-top",
+                      staticStyle: { "max-width": "150px", margin: "0 auto" },
+                      attrs: { src: "../groups_images/404.png", alt: "..." }
+                    }),
+                _vm._v(" "),
+                _c("div", { staticClass: "card-body" }, [
+                  _c("p", { staticClass: "card-text" }, [
+                    _vm._v(_vm._s(group.name))
+                  ])
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "card-footer" }, [
+                  _c(
+                    "a",
+                    {
+                      staticClass: "btn btn-primary btn-sm",
+                      attrs: { href: "/user/group/" + group.id }
+                    },
+                    [_vm._v("View")]
+                  )
+                ])
+              ])
+            ]
+          )
+        }),
+        0
+      ),
+      _vm._v(" "),
+      _vm.loadMore == true
+        ? _c("input", {
+            staticClass: "btn btn-primary btn-sm",
+            attrs: { type: "button", value: "load more" },
+            on: { click: _vm.infiniteHandler }
+          })
+        : _vm._e()
     ]
   )
 }
-var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "carousel-item active" }, [
-      _c("div", { staticClass: "card-body text-center" }, [
-        _vm._v("\n            Popular Groups\n          ")
-      ])
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("p", { staticClass: "card-text" }, [
-      _c(
-        "a",
-        {
-          staticClass: "btn btn-outline-primary btn-sm btn-block",
-          attrs: { href: "" }
-        },
-        [_vm._v("Join")]
-      )
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c(
-      "a",
-      {
-        staticClass: "carousel-control-prev",
-        attrs: {
-          href: "#carouselExampleControls1",
-          role: "button",
-          "data-slide": "prev"
-        }
-      },
-      [
-        _c("span", {
-          staticClass: "carousel-control-prev-icon blue",
-          attrs: { "aria-hidden": "true" }
-        }),
-        _vm._v(" "),
-        _c("span", { staticClass: "sr-only" }, [_vm._v("Previous")])
-      ]
-    )
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c(
-      "a",
-      {
-        staticClass: "carousel-control-next",
-        attrs: {
-          href: "#carouselExampleControls1",
-          role: "button",
-          "data-slide": "next"
-        }
-      },
-      [
-        _c("span", {
-          staticClass: "carousel-control-next-icon blue",
-          attrs: { "aria-hidden": "true" }
-        }),
-        _vm._v(" "),
-        _c("span", { staticClass: "sr-only" }, [_vm._v("Next")])
-      ]
-    )
-  }
-]
+var staticRenderFns = []
 render._withStripped = true
 
 
@@ -40409,10 +40492,20 @@ var render = function() {
                     [
                       _c("div", { staticClass: "row no-gutters" }, [
                         _c("div", { staticClass: "col-md-4" }, [
-                          _c("img", {
-                            staticClass: "card-img",
-                            attrs: { src: "../avatar.jpg", alt: "..." }
-                          })
+                          popularg.photo
+                            ? _c("img", {
+                                staticClass: "card-img",
+                                attrs: {
+                                  src: "../groups_images/" + popularg.photo
+                                }
+                              })
+                            : _c("img", {
+                                staticClass: "card-img",
+                                attrs: {
+                                  src: "../groups_images/404.png",
+                                  alt: "..."
+                                }
+                              })
                         ]),
                         _vm._v(" "),
                         _c("div", { staticClass: "col-md-8" }, [
@@ -40841,7 +40934,7 @@ var render = function() {
                 _c("h5", { staticClass: "card-header" }, [
                   _c("img", {
                     staticClass: "rounded-circle",
-                    attrs: { src: "../avatar.jpg", width: "50px", alt: "" }
+                    attrs: { src: "/../avatar.jpg", width: "50px", alt: "" }
                   }),
                   _vm._v(
                     '\n            Mark "STATIC" "GROUP ID STATIC 1"\n            '
@@ -40913,7 +41006,7 @@ var render = function() {
                     _c("h5", { staticClass: "card-header" }, [
                       _c("img", {
                         staticClass: "rounded-circle",
-                        attrs: { src: "../avatar.jpg", width: "50px", alt: "" }
+                        attrs: { src: "/../avatar.jpg", width: "50px", alt: "" }
                       }),
                       _vm._v(
                         "\n            " +
@@ -40954,7 +41047,7 @@ var render = function() {
                                     image.image_path
                                       .split("-")[1]
                                       .split(".")[0],
-                                  src: "../images/" + image.image_path
+                                  src: "/../images/" + image.image_path
                                 }
                               }),
                               _vm._v(" "),
@@ -40988,7 +41081,8 @@ var render = function() {
                                               "data-toggle": "modal",
                                               "data-target": "#modal2",
                                               src:
-                                                "../images/" + image.image_path,
+                                                "/../images/" +
+                                                image.image_path,
                                               alt: "Card image cap",
                                               allowfullscreen: ""
                                             }
@@ -53903,8 +53997,6 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _PostComponent_vue_vue_type_template_id_54a00d62___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./PostComponent.vue?vue&type=template&id=54a00d62& */ "./resources/js/components/PostComponent.vue?vue&type=template&id=54a00d62&");
 /* harmony import */ var _PostComponent_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./PostComponent.vue?vue&type=script&lang=js& */ "./resources/js/components/PostComponent.vue?vue&type=script&lang=js&");
 /* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
-/* harmony import */ var _PostComponent_vue_vue_type_custom_index_0_blockType_div_class_card_body__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./PostComponent.vue?vue&type=custom&index=0&blockType=div&class=card-body */ "./resources/js/components/PostComponent.vue?vue&type=custom&index=0&blockType=div&class=card-body");
-/* harmony import */ var _PostComponent_vue_vue_type_custom_index_0_blockType_div_class_card_body__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(_PostComponent_vue_vue_type_custom_index_0_blockType_div_class_card_body__WEBPACK_IMPORTED_MODULE_3__);
 
 
 
@@ -53923,25 +54015,10 @@ var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_
   
 )
 
-/* custom blocks */
-
-if (typeof _PostComponent_vue_vue_type_custom_index_0_blockType_div_class_card_body__WEBPACK_IMPORTED_MODULE_3___default.a === 'function') _PostComponent_vue_vue_type_custom_index_0_blockType_div_class_card_body__WEBPACK_IMPORTED_MODULE_3___default()(component)
-
 /* hot reload */
 if (false) { var api; }
 component.options.__file = "resources/js/components/PostComponent.vue"
 /* harmony default export */ __webpack_exports__["default"] = (component.exports);
-
-/***/ }),
-
-/***/ "./resources/js/components/PostComponent.vue?vue&type=custom&index=0&blockType=div&class=card-body":
-/*!*********************************************************************************************************!*\
-  !*** ./resources/js/components/PostComponent.vue?vue&type=custom&index=0&blockType=div&class=card-body ***!
-  \*********************************************************************************************************/
-/*! no static exports found */
-/***/ (function(module, exports) {
-
-
 
 /***/ }),
 
@@ -53995,8 +54072,8 @@ __webpack_require__.r(__webpack_exports__);
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! /home/mark/coaching/resources/js/app.js */"./resources/js/app.js");
-module.exports = __webpack_require__(/*! /home/mark/coaching/resources/sass/app.scss */"./resources/sass/app.scss");
+__webpack_require__(/*! /home/fady/coaching/resources/js/app.js */"./resources/js/app.js");
+module.exports = __webpack_require__(/*! /home/fady/coaching/resources/sass/app.scss */"./resources/sass/app.scss");
 
 
 /***/ })

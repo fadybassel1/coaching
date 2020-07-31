@@ -39,10 +39,9 @@ Vue.component(
 );
 Vue.component("comments", require("./components/CommentComponent.vue").default);
 Vue.component("likes", require("./components/LikeComponent.vue").default);
-Vue.component(
-    "create-post",
-    require("./components/CreatePostComponent.vue").default
-);
+Vue.component( "create-post",require("./components/CreatePostComponent.vue").default);
+
+
 Vue.component("InfiniteLoading", require("vue-infinite-loading"));
 
 /**

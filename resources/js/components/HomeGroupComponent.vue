@@ -12,7 +12,8 @@
           <div class="card mb-3" style="max-width: 540px;">
             <div class="row no-gutters">
               <div class="col-md-4">
-                <img :src="'../avatar.jpg'" class="card-img" alt="..." />
+                                <img v-if="popularg.photo" :src="'../groups_images/'+popularg.photo" class="card-img" />
+            <img v-else :src="'../groups_images/404.png'" class="card-img" alt="..."/>
               </div>
               <div class="col-md-8">
                 <div class="card-body">
