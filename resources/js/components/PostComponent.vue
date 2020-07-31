@@ -57,11 +57,35 @@
               <h5>{{ post.text }}</h5>
               <div v-for="(image, index) in post.images" :key="index" style="display: inline-block">
                 <img
+                  width="230"
+                  height="230"
+                  data-toggle="modal"
+                  :data-target="'#a' +image.image_path.split('-')[1].split('.')[0]"
                   :src="'../images/' + image.image_path"
-                  width="200px"
-                  height="200px"
-                  style="padding-right: 5px"
+                  style="padding-right: 5px; object-fit: cover;"
                 />
+                <!-- MODAL ENLARGE IMAGE -->
+                <div
+                  class="modal fade text-center"
+                  :id="'a' +image.image_path.split('-')[1].split('.')[0]"
+                  tabindex="-1"
+                  role="dialog"
+                  aria-hidden="true"
+                >
+                  <div class="modal-dialog modal-lg">
+                    <div class="modal-body mb-0 p-0">
+                      <img
+                        width="800"
+                        data-toggle="modal"
+                        data-target="#modal2"
+                        :src="'../images/' +image.image_path"
+                        alt="Card image cap"
+                        allowfullscreen
+                      />
+                    </div>
+                  </div>
+                </div>
+                <!-- END MODAL ENLARGE IMAGE -->
               </div>
               <div class="d-flex">
                 <a

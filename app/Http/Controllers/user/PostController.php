@@ -20,6 +20,7 @@ class PostController extends Controller
 
    public function addNewPost(Request $request)
    {
+      // dd($request->all());
       try {
          $post = new Post();
          $post->user_id = Auth::user()->id;
@@ -29,7 +30,7 @@ class PostController extends Controller
          $post->save();
          if ($request->images) {
             foreach ($request->images as $image) {
-               $name = time() . '.' . $image->getClientOriginalExtension();
+               $name = time() . '-' . uniqid() . '.' . $image->getClientOriginalExtension();
                $destinationPath = public_path('/images');
                $image->move($destinationPath, $name);
                $image = new Image();

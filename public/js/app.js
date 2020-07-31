@@ -3075,6 +3075,30 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 window.onload = function () {
   $("#exampleModalCenter").on("show.bs.modal", function (e) {
     window.location.hash = "modal";
@@ -40917,13 +40941,64 @@ var render = function() {
                             },
                             [
                               _c("img", {
-                                staticStyle: { "padding-right": "5px" },
+                                staticStyle: {
+                                  "padding-right": "5px",
+                                  "object-fit": "cover"
+                                },
                                 attrs: {
-                                  src: "../images/" + image.image_path,
-                                  width: "200px",
-                                  height: "200px"
+                                  width: "230",
+                                  height: "230",
+                                  "data-toggle": "modal",
+                                  "data-target":
+                                    "#a" +
+                                    image.image_path
+                                      .split("-")[1]
+                                      .split(".")[0],
+                                  src: "../images/" + image.image_path
                                 }
-                              })
+                              }),
+                              _vm._v(" "),
+                              _c(
+                                "div",
+                                {
+                                  staticClass: "modal fade text-center",
+                                  attrs: {
+                                    id:
+                                      "a" +
+                                      image.image_path
+                                        .split("-")[1]
+                                        .split(".")[0],
+                                    tabindex: "-1",
+                                    role: "dialog",
+                                    "aria-hidden": "true"
+                                  }
+                                },
+                                [
+                                  _c(
+                                    "div",
+                                    { staticClass: "modal-dialog modal-lg" },
+                                    [
+                                      _c(
+                                        "div",
+                                        { staticClass: "modal-body mb-0 p-0" },
+                                        [
+                                          _c("img", {
+                                            attrs: {
+                                              width: "800",
+                                              "data-toggle": "modal",
+                                              "data-target": "#modal2",
+                                              src:
+                                                "../images/" + image.image_path,
+                                              alt: "Card image cap",
+                                              allowfullscreen: ""
+                                            }
+                                          })
+                                        ]
+                                      )
+                                    ]
+                                  )
+                                ]
+                              )
                             ]
                           )
                         }),
