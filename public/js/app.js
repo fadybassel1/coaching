@@ -3169,6 +3169,10 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
 window.onload = function () {
   $("#exampleModalCenter").on("show.bs.modal", function (e) {
     window.location.hash = "modal";
@@ -3216,6 +3220,10 @@ window.onload = function () {
     }
   },
   mounted: function mounted() {
+    if (window.location.pathname == "/user/home") {
+      document.getElementById("addNewPost").style.display = "none";
+    }
+
     console.log("Component mounted."); // $("#exampleModalCenter").on("hidden.bs.modal", function () {
     //   this.comments = [];
     //   console.log(this.comments);
@@ -40928,73 +40936,80 @@ var render = function() {
           }
         },
         [
-          _c("div", { staticClass: "row justify-content-center" }, [
-            _c("div", { staticClass: "container-fluid" }, [
-              _c("div", { staticClass: "card border-info mb-3" }, [
-                _c("h5", { staticClass: "card-header" }, [
-                  _c("img", {
-                    staticClass: "rounded-circle",
-                    attrs: { src: "/../avatar.jpg", width: "50px", alt: "" }
-                  }),
-                  _vm._v(
-                    '\n            Mark "STATIC" "GROUP ID STATIC 1"\n            '
-                  )
-                ]),
-                _vm._v(" "),
-                _c("div", { staticClass: "card-body" }, [
-                  _c("div", { staticClass: "d-flex" }, [
-                    _c(
-                      "a",
-                      {
-                        staticStyle: { width: "100%" },
-                        attrs: {
-                          "data-toggle": "modal",
-                          "data-target": "#createPostModal"
-                        },
-                        on: {
-                          click: function($event) {
-                            _vm.component = "create-post"
-                          }
-                        }
-                      },
-                      [
-                        _c("input", {
-                          directives: [
-                            {
-                              name: "model",
-                              rawName: "v-model",
-                              value: _vm.newPost,
-                              expression: "newPost"
-                            }
-                          ],
-                          staticClass: "form-control",
-                          attrs: {
-                            type: "text",
-                            name: "newPost",
-                            id: "newPost",
-                            placeholder: "Aktb aly nfsk fih"
-                          },
-                          domProps: { value: _vm.newPost },
-                          on: {
-                            input: function($event) {
-                              if ($event.target.composing) {
-                                return
-                              }
-                              _vm.newPost = $event.target.value
-                            }
-                          }
-                        })
-                      ]
+          _c(
+            "div",
+            {
+              staticClass: "row justify-content-center",
+              attrs: { id: "addNewPost" }
+            },
+            [
+              _c("div", { staticClass: "container-fluid" }, [
+                _c("div", { staticClass: "card border-info mb-3" }, [
+                  _c("h5", { staticClass: "card-header" }, [
+                    _c("img", {
+                      staticClass: "rounded-circle",
+                      attrs: { src: "/../avatar.jpg", width: "50px", alt: "" }
+                    }),
+                    _vm._v(
+                      '\n            Mark "STATIC" "GROUP ID STATIC 1"\n            '
                     )
                   ]),
                   _vm._v(" "),
-                  _c("hr"),
-                  _vm._v(" "),
-                  _vm._m(0)
+                  _c("div", { staticClass: "card-body" }, [
+                    _c("div", { staticClass: "d-flex" }, [
+                      _c(
+                        "a",
+                        {
+                          staticStyle: { width: "100%" },
+                          attrs: {
+                            "data-toggle": "modal",
+                            "data-target": "#createPostModal"
+                          },
+                          on: {
+                            click: function($event) {
+                              _vm.component = "create-post"
+                            }
+                          }
+                        },
+                        [
+                          _c("input", {
+                            directives: [
+                              {
+                                name: "model",
+                                rawName: "v-model",
+                                value: _vm.newPost,
+                                expression: "newPost"
+                              }
+                            ],
+                            staticClass: "form-control",
+                            attrs: {
+                              type: "text",
+                              name: "newPost",
+                              id: "newPost",
+                              placeholder: "Aktb aly nfsk fih"
+                            },
+                            domProps: { value: _vm.newPost },
+                            on: {
+                              input: function($event) {
+                                if ($event.target.composing) {
+                                  return
+                                }
+                                _vm.newPost = $event.target.value
+                              }
+                            }
+                          })
+                        ]
+                      )
+                    ]),
+                    _vm._v(" "),
+                    _c("hr"),
+                    _vm._v(" "),
+                    _vm._m(0)
+                  ])
                 ])
               ])
-            ])
-          ]),
+            ]
+          ),
           _vm._v(" "),
           _vm._l(_vm.posts, function(post) {
             return _c(
@@ -54072,8 +54087,8 @@ __webpack_require__.r(__webpack_exports__);
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! /home/fady/coaching/resources/js/app.js */"./resources/js/app.js");
-module.exports = __webpack_require__(/*! /home/fady/coaching/resources/sass/app.scss */"./resources/sass/app.scss");
+__webpack_require__(/*! /home/mark/coaching/resources/js/app.js */"./resources/js/app.js");
+module.exports = __webpack_require__(/*! /home/mark/coaching/resources/sass/app.scss */"./resources/sass/app.scss");
 
 
 /***/ })
