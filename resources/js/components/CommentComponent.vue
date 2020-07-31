@@ -126,6 +126,7 @@ export default {
           .then(({ data }) => {
             console.log(data);
             if (data.success) {
+              data.comment.user = data.comment_user;
               this.comments.unshift(data.comment);
               this.commentText = "";
               this.$emit("commentAdded", this.post_id);

@@ -25,7 +25,7 @@ class CommentController extends Controller
             $comment->post_id = $request['post_id'];
             $comment->text = $request['text'];
             $comment->save();
-            return ['success' => true, 'comment' => $comment];
+            return ['success' => true, 'comment' => $comment, 'comment_user' => $comment->user];
         } catch (Exception $e) {
             return ['success' => false];
         }

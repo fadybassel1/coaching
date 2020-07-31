@@ -1,7 +1,7 @@
-<template >
+<template>
   <div class="container-fluid shadow-none">
     <div
-      style="  width: auto; 
+      style="width: auto; 
                 height:auto;
                 max-height: 700px; 
                 overflow-y: auto;
@@ -19,28 +19,31 @@
             </h5>
             <div class="card-body">
               <div class="d-flex">
-                <input
-                  type="text"
-                  name="newPost"
-                  id="newPost"
-                  v-model="newPost"
-                  class="form-control"
-                  placeholder="Aktb aly nfsk fih"
-                />
+                <a
+                  data-toggle="modal"
+                  data-target="#createPostModal"
+                  v-on:click="component = 'create-post'"
+                  style="width: 100%;"
+                >
+                  <input
+                    type="text"
+                    name="newPost"
+                    id="newPost"
+                    v-model="newPost"
+                    class="form-control"
+                    placeholder="Aktb aly nfsk fih"
+                  />
+                </a>
               </div>
               <hr />
               <div id="card-footer">
-                <input
-                  @click="addNewPost"
-                  type="button"
-                  value="Post"
-                  class="btn btn-primary btn-sm float-right"
-                />
+                <input type="button" value="Post" class="btn btn-primary btn-sm float-right" />
               </div>
             </div>
           </div>
         </div>
       </div>
+
       <div v-for="post in posts" :key="post.id" class="row justify-content-center">
         <div class="container-fluid">
           <div class="card border-info mb-3">
@@ -52,6 +55,14 @@
             <div class="card-body">
               <p class="card-title text-muted">{{ post.created_at }}</p>
               <h5>{{ post.text }}</h5>
+              <div v-for="(image, index) in post.images" :key="index" style="display: inline-block">
+                <img
+                  :src="'../images/' + image.image_path"
+                  width="200px"
+                  height="200px"
+                  style="padding-right: 5px"
+                />
+              </div>
               <div class="d-flex">
                 <a
                   v-if="post.likes_count > 0"
@@ -70,7 +81,7 @@
               <hr />
               <div id="card-footer">
                 <i
-                  v-if="post.liked==false"
+                  v-if="post.liked == false"
                   @click="likeButton(post)"
                   style="color:#3687CF; cursor: pointer;"
                   class="far fa-thumbs-up float-left ml-md-5"
@@ -101,14 +112,14 @@
       </div>
       <infinite-loading @distance="1" @infinite="infiniteHandler"></infinite-loading>
     </div>
-    <!-- COMMENT AND LIKE MODEL -->
     <component
       :is="component"
       v-bind="currentProperties"
       :key="post_id"
       @commentAdded="increment_comments_count"
+      @postAdded="add_new_post"
+      @close="close"
     ></component>
-    <!-- END COMMENT AND LIKE MODEL -->
   </div>
 </template>
 
@@ -117,10 +128,20 @@ window.onload = function () {
   $("#exampleModalCenter").on("show.bs.modal", function (e) {
     window.location.hash = "modal";
   });
+  $("#likeModal").on("show.bs.modal", function (e) {
+    console.log("like model");
+    window.location.hash = "modal";
+  });
+  $("#createPostModal").on("show.bs.modal", function (e) {
+    console.log("like model");
+    window.location.hash = "modal";
+  });
 
   $(window).on("hashchange", function (event) {
-    if (window.location.hash != "#modal") {
+    if (window.location.hash == "modal") {
       $("#exampleModalCenter").modal("hide");
+      $("#likeModal").modal("hide");
+      $("#createModal").modal("hide");
     }
   });
 };
@@ -147,7 +168,7 @@ export default {
           likeurl: this.likeurl,
           post_id: this.post_id,
         };
-      }
+      } else return {};
     },
   },
 
@@ -179,23 +200,14 @@ export default {
     hash() {
       window.location.hash = "";
     },
-    addNewPost() {
-      if (this.newPost != "") {
-        axios
-          .post("addNewPost", {
-            text: this.newPost,
-          })
-          .then(({ data }) => {
-            console.log(data);
-            if (data.success) {
-              data.post.liked = false;
-              data.post.likes_count = 0;
-              data.post.comments_count = 0;
-              this.posts.unshift(data.post);
-              this.newPost = "";
-            }
-          });
-      }
+    close() {
+      $("#createPostModal").modal("toggle");
+    },
+    add_new_post(post) {
+      post.liked = false;
+      post.likes_count = 0;
+      post.comments_count = 0;
+      this.posts.unshift(post);
     },
     increment_comments_count(post_id) {
       let post = this.posts.find((o) => o.id === post_id);

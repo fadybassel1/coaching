@@ -6,6 +6,7 @@ use App\models\Post;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Http\Resources\Post as postResource;
+use App\models\Image;
 use Exception;
 use Illuminate\Support\Facades\Auth;
 
@@ -23,12 +24,24 @@ class PostController extends Controller
          $post = new Post();
          $post->user_id = Auth::user()->id;
          $post->group_id = 1;
-         $post->text = $request['text'];
+         $post->text = $request->text ? $request->text : "";
          $post->user->name = Auth::user()->name;
          $post->save();
-         return ['success' => true, 'post' => $post];
+         if ($request->images) {
+            foreach ($request->images as $image) {
+               $name = time() . '.' . $image->getClientOriginalExtension();
+               $destinationPath = public_path('/images');
+               $image->move($destinationPath, $name);
+               $image = new Image();
+               $image->post_id = $post->id;
+               $image->image_path = $name;
+               $image->save();
+            }
+         }
+         return ['success' => true, 'post' => $post, 'post_images' => $post->images];
       } catch (Exception $e) {
-         return ['success' => false];
+
+         return ['success' => false, 'Exception' => $e->getMessage()];
       }
    }
 

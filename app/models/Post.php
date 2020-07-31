@@ -29,4 +29,9 @@ class Post extends Model
     {
         return $this->hasMany('App\models\Comment');
     }
+
+    public function images()
+    {
+        return $this->hasMany('App\models\Image');
+    }
 }
