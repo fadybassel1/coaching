@@ -6,6 +6,7 @@ use App\models\Group;
 use App\Http\Controllers\Controller;
 use App\models\Post;
 use App\models\Track;
+use DateTime;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -28,8 +29,6 @@ class HomeController extends Controller
      */
     public function index()
     {
-
-
         //popular tags..
         $popularTracks = Track::withCount('groups')->orderBy('groups_count', 'desc')->limit(5)->get();
         return view('user.home', \compact('popularTracks'));
@@ -37,8 +36,10 @@ class HomeController extends Controller
 
     public function group_stat()
     {
+        $ids = Auth::user()->groups()->pluck('id');
+        $tracks = Auth::user()->groups()->pluck('track_id');
         //Most popular groups..
-        $popularGroups = Group::withCount('users')->orderBy('users_count', 'desc')->limit(5)->get();
+        $popularGroups = Group::withCount('users')->whereIn('track_id', $tracks)->whereNotIn('id', $ids)->orderBy('users_count', 'desc')->limit(5)->get();
         //user Groups ordered by Activity...
         $userGroups = Auth::user()->groups()->withCount('posts')->orderBy('posts_count', 'desc')->limit(5)->get();
         return response(['data' => ['popularGroups' => $popularGroups, 'userGroups' => $userGroups]]);
@@ -46,7 +47,7 @@ class HomeController extends Controller
     public function recent_posts()
     {
         $groups = Auth::user()->groups()->pluck('id');
-        $posts = Post::whereIn('group_id', $groups)->with('user')->with('images')->withCount('likes')->withCount('comments')->orderBy('created_at', 'desc')->paginate(10);
+        $posts = Post::whereIn('group_id', $groups)->with('user')->with('images')->with('group')->withCount('likes')->withCount('comments')->orderBy('created_at', 'desc')->paginate(10);
         foreach ($posts as $post) {
             if ($post->likes->contains(Auth::user()->id))
                 $post->liked = true;
@@ -66,8 +67,6 @@ class HomeController extends Controller
             $ids[] = $group->id;
             $tracks[] = $group->track_id;
         }
-
-
         $groups = Group::inRandomOrder()->whereIn('track_id', $tracks)->whereNotIn('id', $ids)->limit(2)->get();
         return response(['data' => ['suggestedGroups' => $groups]]);
     }

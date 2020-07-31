@@ -9,7 +9,7 @@
                 text-align:justify;"
       class="container-fluid scrollbar scrollbar-near-moon"
     >
-      <div id="addNewPost" class="row justify-content-center">
+      <div v-if="url != '/user/home'" class="row justify-content-center">
         <div class="container-fluid">
           <div class="card border-info mb-3">
             <h5 class="card-header">
@@ -48,8 +48,25 @@
         <div class="container-fluid">
           <div class="card border-info mb-3">
             <h5 class="card-header">
-              <img :src="'/../avatar.jpg'" class="rounded-circle" width="50px" alt />
-              {{ post.user.name }}
+              <div v-if="url == '/user/home'" class="row" style="padding-left: 15px;">
+                <div>
+                  <img :src="'/../avatar.jpg'" class="rounded-circle" width="50px" />
+                </div>
+                <div class="col-md-6">
+                  <div class="text">
+                    <span>{{ post.user.name }}</span>
+                    <br />
+                    <a
+                      :href="'/user/group/'+post.group.id"
+                      style="color:grey; font-size:18px;"
+                    >{{ post.group.name }}</a>
+                  </div>
+                </div>
+              </div>
+              <div v-else>
+                <img :src="'/../avatar.jpg'" class="rounded-circle" width="50px" alt />
+                {{ post.user.name }}
+              </div>
               <!-- <cite class="blockquote-footer float-right" title="Group Admin">Member</cite> -->
             </h5>
             <div class="card-body">
@@ -198,12 +215,12 @@ export default {
         };
       } else return {};
     },
+    url: function () {
+      return window.location.pathname;
+    },
   },
 
   mounted() {
-    if (window.location.pathname == "/user/home") {
-      document.getElementById("addNewPost").style.display = "none";
-    }
     console.log("Component mounted.");
     // $("#exampleModalCenter").on("hidden.bs.modal", function () {
     //   this.comments = [];
