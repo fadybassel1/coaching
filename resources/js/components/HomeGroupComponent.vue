@@ -1,28 +1,27 @@
 <template>
   <div class="col-md-3">
-    <div  id="carouselExampleControls" class="carousel slide" data-ride="carousel">
-      
-      <div  class="carousel-inner">
-         <div class="carousel-item active">
-           <div class="card-body text-center">
-             Popular Groups
-           </div>
-         </div>
+    <div id="carouselExampleControls" class="carousel slide" data-ride="carousel">
+      <div class="carousel-inner">
+        <div class="carousel-item active">
+          <div class="card-body text-center">Popular Groups</div>
+        </div>
         <div v-for="popularg in popularGroups" :key="popularg.id" class="carousel-item">
           <div class="card mb-3" style="max-width: 540px;">
             <div class="row no-gutters">
               <div class="col-md-4">
-                                <img v-if="popularg.photo" :src="'../groups_images/'+popularg.photo" class="card-img" />
-            <img v-else :src="'../groups_images/404.png'" class="card-img" alt="..."/>
+                <img
+                  v-if="popularg.photo"
+                  :src="'../groups_images/'+popularg.photo"
+                  class="card-img"
+                />
+                <img v-else :src="'../groups_images/404.png'" class="card-img" alt="..." />
               </div>
               <div class="col-md-8">
                 <div class="card-body">
                   <h5 class="card-title">{{popularg.name}}</h5>
-                  <p
-                    class="card-text"
-                  >Has {{popularg.users_count}} Members.</p>
+                  <p class="card-text">Has {{popularg.users_count}} Members.</p>
                   <p class="card-text">
-                   <a class="btn btn-outline-primary btn-sm btn-block" href="">Join</a>
+                    <a class="btn btn-outline-primary btn-sm btn-block" href>Join</a>
                   </p>
                 </div>
               </div>
@@ -71,8 +70,6 @@
         </ul>
       </div>
     </div>
-
-  
   </div>
 </template>
 

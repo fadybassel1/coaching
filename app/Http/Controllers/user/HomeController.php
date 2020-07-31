@@ -36,8 +36,10 @@ class HomeController extends Controller
 
     public function group_stat()
     {
+        $ids = Auth::user()->groups()->pluck('id');
+        $tracks = Auth::user()->groups()->pluck('track_id');
         //Most popular groups..
-        $popularGroups = Group::withCount('users')->orderBy('users_count', 'desc')->limit(5)->get();
+        $popularGroups = Group::withCount('users')->whereIn('track_id', $tracks)->whereNotIn('id', $ids)->orderBy('users_count', 'desc')->limit(5)->get();
         //user Groups ordered by Activity...
         $userGroups = Auth::user()->groups()->withCount('posts')->orderBy('posts_count', 'desc')->limit(5)->get();
         return response(['data' => ['popularGroups' => $popularGroups, 'userGroups' => $userGroups]]);
@@ -65,8 +67,6 @@ class HomeController extends Controller
             $ids[] = $group->id;
             $tracks[] = $group->track_id;
         }
-
-
         $groups = Group::inRandomOrder()->whereIn('track_id', $tracks)->whereNotIn('id', $ids)->limit(2)->get();
         return response(['data' => ['suggestedGroups' => $groups]]);
     }

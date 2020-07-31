@@ -2752,9 +2752,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   mounted: function mounted() {
@@ -40613,7 +40610,7 @@ var staticRenderFns = [
     var _c = _vm._self._c || _h
     return _c("div", { staticClass: "carousel-item active" }, [
       _c("div", { staticClass: "card-body text-center" }, [
-        _vm._v("\n           Popular Groups\n         ")
+        _vm._v("Popular Groups")
       ])
     ])
   },
