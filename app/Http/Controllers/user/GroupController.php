@@ -36,7 +36,8 @@ class GroupController extends Controller
    }
 
    public function show($id){
-       $group=Group::findOrFail($id);
+        
+        $group=Group::findOrFail($id);
        return view('user.group',compact('group'));
    }
 }
