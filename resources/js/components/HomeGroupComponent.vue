@@ -12,6 +12,8 @@
                 <img
                   v-if="popularg.photo"
                   :src="'../groups_images/'+popularg.photo"
+                  width="100"
+                  height="100"
                   class="card-img"
                 />
                 <img v-else :src="'../groups_images/404.png'" class="card-img" alt="..." />

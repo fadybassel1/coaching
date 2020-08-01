@@ -2596,6 +2596,23 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: ["id"],
@@ -2675,6 +2692,8 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var vue_infinite_loading__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vue-infinite-loading */ "./node_modules/vue-infinite-loading/dist/vue-infinite-loading.js");
 /* harmony import */ var vue_infinite_loading__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(vue_infinite_loading__WEBPACK_IMPORTED_MODULE_0__);
+//
+//
 //
 //
 //
@@ -40384,16 +40403,31 @@ var render = function() {
                 result.photo
                   ? _c("img", {
                       staticClass: "card-img-top",
-                      staticStyle: { "max-width": "150px", margin: "0 auto" },
+                      staticStyle: {
+                        "max-width": "150px",
+                        margin: "0 auto",
+                        "object-fit": "cover"
+                      },
                       attrs: {
                         src: "../groups_images/" + result.photo,
+                        width: "150px",
+                        height: "100px",
                         alt: "..."
                       }
                     })
                   : _c("img", {
                       staticClass: "card-img-top",
-                      staticStyle: { "max-width": "150px", margin: "0 auto" },
-                      attrs: { src: "../groups_images/404.png", alt: "..." }
+                      staticStyle: {
+                        "max-width": "150px",
+                        margin: "0 auto",
+                        "object-fit": "cover"
+                      },
+                      attrs: {
+                        src: "../groups_images/404.png",
+                        width: "150px",
+                        height: "100px",
+                        alt: "..."
+                      }
                     }),
                 _vm._v(" "),
                 _c("div", { staticClass: "card-body" }, [
@@ -40439,16 +40473,31 @@ var render = function() {
                 group.photo
                   ? _c("img", {
                       staticClass: "card-img-top",
-                      staticStyle: { "max-width": "150px", margin: "0 auto" },
+                      staticStyle: {
+                        "max-width": "150px",
+                        margin: "0 auto",
+                        "object-fit": "cover"
+                      },
                       attrs: {
                         src: "../groups_images/" + group.photo,
+                        width: "150px",
+                        height: "100px",
                         alt: "..."
                       }
                     })
                   : _c("img", {
                       staticClass: "card-img-top",
-                      staticStyle: { "max-width": "150px", margin: "0 auto" },
-                      attrs: { src: "../groups_images/404.png", alt: "..." }
+                      staticStyle: {
+                        "max-width": "150px",
+                        margin: "0 auto",
+                        "object-fit": "cover"
+                      },
+                      attrs: {
+                        src: "../groups_images/404.png",
+                        width: "150px",
+                        height: "100px",
+                        alt: "..."
+                      }
                     }),
                 _vm._v(" "),
                 _c("div", { staticClass: "card-body" }, [
@@ -40538,7 +40587,9 @@ var render = function() {
                             ? _c("img", {
                                 staticClass: "card-img",
                                 attrs: {
-                                  src: "../groups_images/" + popularg.photo
+                                  src: "../groups_images/" + popularg.photo,
+                                  width: "100",
+                                  height: "100"
                                 }
                               })
                             : _c("img", {

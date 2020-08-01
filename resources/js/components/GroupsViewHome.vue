@@ -1,37 +1,48 @@
 <template>
   <div class="container-fluid my-5" align="center">
     <div class="row">
-    
-        <input
-         v-model="search" @keyup="searchGroups" class="form-control form-control-sm mr-3 w-75"
-          type="text"
-          placeholder="Search"
-          aria-label="Search"
-        />
-        <i class="fas fa-search" aria-hidden="true"></i>
-     
+      <input
+        v-model="search"
+        @keyup="searchGroups"
+        class="form-control form-control-sm mr-3 w-75"
+        type="text"
+        placeholder="Search"
+        aria-label="Search"
+      />
+      <i class="fas fa-search" aria-hidden="true"></i>
     </div>
 
-       <div class="row">
-      <div class="card" style="width: 16rem; margin:1%" v-for="result in searchResults" :key="result.id">
+    <div class="row">
+      <div
+        class="card"
+        style="width: 16rem; margin:1%"
+        v-for="result in searchResults"
+        :key="result.id"
+      >
         <div class="text-center">
           <img
-           v-if="result.photo" :src="'../groups_images/'+result.photo"
-            style="max-width:150px; margin:0 auto;"
+            v-if="result.photo"
+            :src="'../groups_images/'+result.photo"
+            style="max-width:150px; margin:0 auto; object-fit: cover;"
+            width="150px"
+            height="100px"
             class="card-img-top"
             alt="..."
           />
-            <img
-           v-else :src="'../groups_images/404.png'"
-            style="max-width:150px; margin:0 auto;"
+          <img
+            v-else
+            :src="'../groups_images/404.png'"
+            style="max-width:150px; margin:0 auto; object-fit: cover;"
+            width="150px"
+            height="100px"
             class="card-img-top"
             alt="..."
           />
-          
-        <div class="card-body"> 
+
+          <div class="card-body">
             <p class="card-text">{{result.name}}</p>
           </div>
-           <div class="card-footer"> 
+          <div class="card-footer">
             <a :href="'/user/group/'+result.id" class="btn btn-primary btn-sm">View</a>
           </div>
         </div>
@@ -43,22 +54,28 @@
       <div class="card" style="width: 16rem; margin:1%" v-for="group in userGroups" :key="group.id">
         <div class="text-center">
           <img
-           v-if="group.photo" :src="'../groups_images/'+group.photo"
-            style="max-width:150px; margin:0 auto;"
+            v-if="group.photo"
+            :src="'../groups_images/'+group.photo"
+            style="max-width:150px; margin:0 auto; object-fit: cover;"
+            width="150px"
+            height="100px"
             class="card-img-top"
             alt="..."
           />
-            <img
-           v-else :src="'../groups_images/404.png'"
-            style="max-width:150px; margin:0 auto;"
+          <img
+            v-else
+            :src="'../groups_images/404.png'"
+            style="max-width:150px; margin:0 auto; object-fit: cover;"
+            width="150px"
+            height="100px"
             class="card-img-top"
             alt="..."
           />
-          
+
           <div class="card-body">
             <p class="card-text">{{group.name}}</p>
           </div>
-            <div class="card-footer"> 
+          <div class="card-footer">
             <a :href="'/user/group/'+group.id" class="btn btn-primary btn-sm">View</a>
           </div>
         </div>
@@ -85,28 +102,25 @@ export default {
   data() {
     return {
       userGroups: [],
-      searchResults:[],
+      searchResults: [],
       loadMore: true,
       page: 1,
-      search:"",
+      search: "",
     };
   },
 
   methods: {
-    searchGroups(){
-      if(this.search.length == 0)
-      this.searchResults=[];
-        if(this.search.length >= 3){
-         axios
-        .get("/user/api/search-groups/" + this.search)
-        .then(({ data }) => {
+    searchGroups() {
+      if (this.search.length == 0) this.searchResults = [];
+      if (this.search.length >= 3) {
+        axios.get("/user/api/search-groups/" + this.search).then(({ data }) => {
           if (data.data.results.length) {
-            this.searchResults=[];
-            this.searchResults=data.data.results;
-          } 
-        });}
-      
-      },
+            this.searchResults = [];
+            this.searchResults = data.data.results;
+          }
+        });
+      }
+    },
     infiniteHandler() {
       this.loadMore = true;
       axios
