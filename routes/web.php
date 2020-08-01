@@ -32,5 +32,6 @@ Route::group(['namespace' => 'user', 'prefix' => 'user'], function () {
     Route::get('/api/search-groups/{keyword}', 'GroupController@showGroups');
     Route::get('/api/group-posts/{id}', 'GroupController@showPosts');
     Route::get('/group/{id}', 'GroupController@show');
+    Route::get('/requestGroupJoin/{id}', 'GroupController@requestGroupJoin');
 });
 Route::post('user/addComment', 'CommentController@addComment');

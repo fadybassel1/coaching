@@ -20,9 +20,18 @@
                 <div class="card-body">
                   <h5 class="card-title">{{popularg.name}}</h5>
                   <p class="card-text">Has {{popularg.users_count}} Members.</p>
-                  <p class="card-text">
-                    <a class="btn btn-outline-primary btn-sm btn-block" href>Join</a>
-                  </p>
+                  <div class="card-text">
+                    <a
+                      :id="'joinButton'+popularg.id"
+                      class="btn btn-outline-primary btn-sm btn-block"
+                      @click="joinGroup(popularg.id)"
+                    >Join</a>
+                    <div
+                      :id="'requestedButton'+popularg.id"
+                      style="display: none;"
+                      class="btn btn-outline-secondary btn-sm btn-block"
+                    >Requested</div>
+                  </div>
                 </div>
               </div>
             </div>
@@ -107,6 +116,18 @@ export default {
     });
   },
 
-  methods: {},
+  methods: {
+    joinGroup(group_id) {
+      console.log(group_id);
+      axios.get("requestGroupJoin/" + group_id).then(({ data }) => {
+        if (data.success) {
+          document.getElementById("joinButton" + group_id).style.display =
+            "none";
+          document.getElementById("requestedButton" + group_id).style.display =
+            "block";
+        }
+      });
+    },
+  },
 };
 </script>

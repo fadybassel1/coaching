@@ -2752,6 +2752,15 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   mounted: function mounted() {
@@ -2787,7 +2796,19 @@ __webpack_require__.r(__webpack_exports__);
       }
     });
   },
-  methods: {}
+  methods: {
+    joinGroup: function joinGroup(group_id) {
+      console.log(group_id);
+      axios.get("requestGroupJoin/" + group_id).then(function (_ref3) {
+        var data = _ref3.data;
+
+        if (data.success) {
+          document.getElementById("joinButton" + group_id).style.display = "none";
+          document.getElementById("requestedButton" + group_id).style.display = "block";
+        }
+      });
+    }
+  }
 });
 
 /***/ }),
@@ -40543,7 +40564,33 @@ var render = function() {
                               )
                             ]),
                             _vm._v(" "),
-                            _vm._m(1, true)
+                            _c("div", { staticClass: "card-text" }, [
+                              _c(
+                                "a",
+                                {
+                                  staticClass:
+                                    "btn btn-outline-primary btn-sm btn-block",
+                                  attrs: { id: "joinButton" + popularg.id },
+                                  on: {
+                                    click: function($event) {
+                                      return _vm.joinGroup(popularg.id)
+                                    }
+                                  }
+                                },
+                                [_vm._v("Join")]
+                              ),
+                              _vm._v(" "),
+                              _c(
+                                "div",
+                                {
+                                  staticClass:
+                                    "btn btn-outline-secondary btn-sm btn-block",
+                                  staticStyle: { display: "none" },
+                                  attrs: { id: "requestedButton" + popularg.id }
+                                },
+                                [_vm._v("Requested")]
+                              )
+                            ])
                           ])
                         ])
                       ])
@@ -40556,9 +40603,9 @@ var render = function() {
           2
         ),
         _vm._v(" "),
-        _vm._m(2),
+        _vm._m(1),
         _vm._v(" "),
-        _vm._m(3)
+        _vm._m(2)
       ]
     ),
     _vm._v(" "),
@@ -40612,21 +40659,6 @@ var staticRenderFns = [
       _c("div", { staticClass: "card-body text-center" }, [
         _vm._v("Popular Groups")
       ])
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("p", { staticClass: "card-text" }, [
-      _c(
-        "a",
-        {
-          staticClass: "btn btn-outline-primary btn-sm btn-block",
-          attrs: { href: "" }
-        },
-        [_vm._v("Join")]
-      )
     ])
   },
   function() {
@@ -54142,8 +54174,8 @@ __webpack_require__.r(__webpack_exports__);
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! /home/fady/coaching/resources/js/app.js */"./resources/js/app.js");
-module.exports = __webpack_require__(/*! /home/fady/coaching/resources/sass/app.scss */"./resources/sass/app.scss");
+__webpack_require__(/*! /home/mark/coaching/resources/js/app.js */"./resources/js/app.js");
+module.exports = __webpack_require__(/*! /home/mark/coaching/resources/sass/app.scss */"./resources/sass/app.scss");
 
 
 /***/ })
