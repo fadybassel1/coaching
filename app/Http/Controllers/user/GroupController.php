@@ -27,11 +27,12 @@ class GroupController extends Controller
         return response(['data' => ['results' => $results]]);
     }
 
-   public function show($id){
-        
-        $group=Group::findOrFail($id);
-       return view('user.group',compact('group'));
-   }
+    public function show($id)
+    {
+
+        $group = Group::findOrFail($id);
+        return view('user.group', compact('group'));
+    }
     public function showPosts($id)
     {
         $posts = Post::orderBy('created_at', 'Desc')->where('group_id', $id)->with('user')->with('images')->withCount('likes')->withCount('comments')->paginate(10);
@@ -42,12 +43,6 @@ class GroupController extends Controller
                 $post->liked = false;
         }
         return response(['data' => $posts]);
-    }
-
-    public function show($id)
-    {
-        $group = Group::findOrFail($id);
-        return view('user.group', compact('group'));
     }
 
     public function requestGroupJoin($group_id)
