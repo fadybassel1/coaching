@@ -2387,6 +2387,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 
 /* harmony default export */ __webpack_exports__["default"] = ({
+  props: ['groupId'],
   data: function data() {
     return {
       newPost: "",
@@ -2470,6 +2471,8 @@ __webpack_require__.r(__webpack_exports__);
         formData.append("images[]", file, file.name);
       });
       formData.append("text", this.newPost);
+      console.log("faddyyyyyyyy" + this.groupId);
+      formData.append("group_id", this.groupId);
       console.log("upload triggered FormData=", formData);
 
       if (this.newPost != "" || this.images.length != 0) {
@@ -3225,8 +3228,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
 window.onload = function () {
   $("#exampleModalCenter").on("show.bs.modal", function (e) {
     window.location.hash = "modal";
@@ -3253,7 +3254,8 @@ window.onload = function () {
   props: {
     posturl: String,
     commenturl: String,
-    likeurl: String
+    likeurl: String,
+    group_id: String
   },
   components: {
     InfiniteLoading: vue_infinite_loading__WEBPACK_IMPORTED_MODULE_0___default.a
@@ -3269,6 +3271,10 @@ window.onload = function () {
         return {
           likeurl: this.likeurl,
           post_id: this.post_id
+        };
+      } else if (this.component == "create-post") {
+        return {
+          groupId: this.group_id
         };
       } else return {};
     },
@@ -40108,14 +40114,12 @@ var render = function() {
                   staticClass: "rounded-circle",
                   attrs: { src: "../avatar.jpg", width: "50px", alt: "" }
                 }),
-                _vm._v(
-                  '\n          Mark "STATIC" "GROUP ID STATIC 1"\n        '
-                )
+                _vm._v("\n         Share something with the group...\n        ")
               ]),
               _vm._v(" "),
               _c("div", { staticClass: "card-body" }, [
-                _c("div", { staticClass: "d-flex" }, [
-                  _c("input", {
+                _c("div", { staticClass: "row" }, [
+                  _c("textarea", {
                     directives: [
                       {
                         name: "model",
@@ -40129,7 +40133,7 @@ var render = function() {
                       type: "text",
                       name: "newPost",
                       id: "newPost",
-                      placeholder: "Aktb aly nfsk fih"
+                      placeholder: "Type here...."
                     },
                     domProps: { value: _vm.newPost },
                     on: {
@@ -40143,7 +40147,8 @@ var render = function() {
                   }),
                   _vm._v(" "),
                   _c("input", {
-                    attrs: { type: "button", value: "Image" },
+                    staticClass: "btn btn-link form-control",
+                    attrs: { type: "button", value: "Attach Image" },
                     on: {
                       click: function($event) {
                         _vm.uploadImage = true
@@ -41042,7 +41047,7 @@ var render = function() {
                         attrs: { src: "/../avatar.jpg", width: "50px", alt: "" }
                       }),
                       _vm._v(
-                        '\n            Mark "STATIC" "GROUP ID STATIC 1"\n            '
+                        "\n           Share something with the group...\n            "
                       )
                     ]),
                     _vm._v(" "),
@@ -41077,7 +41082,7 @@ var render = function() {
                                 type: "text",
                                 name: "newPost",
                                 id: "newPost",
-                                placeholder: "Aktb aly nfsk fih"
+                                placeholder: "Type here..."
                               },
                               domProps: { value: _vm.newPost },
                               on: {
@@ -41093,9 +41098,7 @@ var render = function() {
                         )
                       ]),
                       _vm._v(" "),
-                      _c("hr"),
-                      _vm._v(" "),
-                      _vm._m(0)
+                      _c("hr")
                     ])
                   ])
                 ])
@@ -41420,19 +41423,7 @@ var render = function() {
     1
   )
 }
-var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { attrs: { id: "card-footer" } }, [
-      _c("input", {
-        staticClass: "btn btn-primary btn-sm float-right",
-        attrs: { type: "button", value: "Post" }
-      })
-    ])
-  }
-]
+var staticRenderFns = []
 render._withStripped = true
 
 
@@ -54225,8 +54216,8 @@ __webpack_require__.r(__webpack_exports__);
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! /home/mark/coaching/resources/js/app.js */"./resources/js/app.js");
-module.exports = __webpack_require__(/*! /home/mark/coaching/resources/sass/app.scss */"./resources/sass/app.scss");
+__webpack_require__(/*! /home/fady/coaching/resources/js/app.js */"./resources/js/app.js");
+module.exports = __webpack_require__(/*! /home/fady/coaching/resources/sass/app.scss */"./resources/sass/app.scss");
 
 
 /***/ })

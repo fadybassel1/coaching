@@ -12,19 +12,19 @@
         <div>
           <h5 class="card-header">
             <img :src="'../avatar.jpg'" class="rounded-circle" width="50px" alt />
-            Mark "STATIC" "GROUP ID STATIC 1"
+           Share something with the group...
           </h5>
           <div class="card-body">
-            <div class="d-flex">
-              <input
+            <div class="row">
+              <textarea
                 type="text"
                 name="newPost"
                 id="newPost"
                 v-model="newPost"
                 class="form-control"
-                placeholder="Aktb aly nfsk fih"
-              />
-              <input type="button" value="Image" @click="uploadImage = true" />
+                placeholder="Type here...."
+              ></textarea>
+              <input type="button" class="btn btn-link form-control" value="Attach Image" @click="uploadImage = true" />
             </div>
             <br v-if="uploadImage == true" />
             <div
@@ -89,6 +89,7 @@
 <script>
 import axios from "axios";
 export default {
+  props:['groupId'],
   data: () => ({
     newPost: "",
     uploadImage: false,
@@ -150,6 +151,8 @@ export default {
         formData.append("images[]", file, file.name);
       });
       formData.append("text", this.newPost);
+      console.log("faddyyyyyyyy" +this.groupId)
+      formData.append("group_id", this.groupId);
       console.log("upload triggered FormData=", formData);
       if (this.newPost != "" || this.images.length != 0) {
         axios

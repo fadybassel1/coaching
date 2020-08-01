@@ -14,7 +14,7 @@
           <div class="card border-info mb-3">
             <h5 class="card-header">
               <img :src="'/../avatar.jpg'" class="rounded-circle" width="50px" alt />
-              Mark "STATIC" "GROUP ID STATIC 1"
+             Share something with the group...
               <!-- <cite class="blockquote-footer float-right" title="Group Admin">Member</cite> -->
             </h5>
             <div class="card-body">
@@ -23,6 +23,7 @@
                   data-toggle="modal"
                   data-target="#createPostModal"
                   v-on:click="component = 'create-post'"
+                  
                   style="width: 100%;"
                 >
                   <input
@@ -31,14 +32,11 @@
                     id="newPost"
                     v-model="newPost"
                     class="form-control"
-                    placeholder="Aktb aly nfsk fih"
+                    placeholder="Type here..."
                   />
                 </a>
               </div>
               <hr />
-              <div id="card-footer">
-                <input type="button" value="Post" class="btn btn-primary btn-sm float-right" />
-              </div>
             </div>
           </div>
         </div>
@@ -197,6 +195,7 @@ export default {
     posturl: String,
     commenturl: String,
     likeurl: String,
+    group_id: String,
   },
   components: {
     InfiniteLoading,
@@ -213,7 +212,13 @@ export default {
           likeurl: this.likeurl,
           post_id: this.post_id,
         };
-      } else return {};
+      }else if (this.component == "create-post") {  
+        return {
+          groupId: this.group_id,
+          
+        };
+      }   
+      else return {};
     },
     url: function () {
       return window.location.pathname;
@@ -222,6 +227,8 @@ export default {
 
   mounted() {
     console.log("Component mounted.");
+ 
+
     // $("#exampleModalCenter").on("hidden.bs.modal", function () {
     //   this.comments = [];
     //   console.log(this.comments);

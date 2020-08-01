@@ -25,7 +25,7 @@ class PostController extends Controller
       try {
          $post = new Post();
          $post->user_id = Auth::user()->id;
-         $post->group_id = 1;
+         $post->group_id = $request->group_id;
          $post->text = $request->text ? $request->text : "";
          $post->user->name = Auth::user()->name;
          $post->save();

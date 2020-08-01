@@ -4,10 +4,12 @@
 
 
 @can('post', $group)
+<link href="{{ asset('css/scroller.css') }}" rel="stylesheet">
 <div id="app">
+    <div class="container">
   <post-component posturl="/user/api/group-posts/{{$group->id}}" commenturl="/admin/post-comment/"
-    likeurl="/admin/post-likes/"></post-component>
-
+    likeurl="/admin/post-likes/" group_id="{{$group->id}}"></post-component>
+</div>
 </div>
 @else
 <div class="card text-center">
@@ -28,11 +30,10 @@
 
   </div>
 </div>
-@endcan
 
 <script>
-  var group_id = document.getElementById('sendRequest').getAttribute("group_id");
-  document.getElementById('sendRequest').addEventListener("click", function() { 
+    document.getElementById('sendRequest').addEventListener("click", function() { 
+    var group_id = document.getElementById('sendRequest').getAttribute("group_id");
     const xhr = new XMLHttpRequest();
     xhr.open('GET', '/user/requestGroupJoin/'+group_id);
     xhr.responseType = 'json';
@@ -45,5 +46,8 @@
     xhr.send();
   });
 </script>
+@endcan
+
+
 
 @endsection
