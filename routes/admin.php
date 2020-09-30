@@ -22,6 +22,12 @@ Route::group(['namespace' => 'Auth', 'middleware' => ['guest:admin', 'guest:web'
     Route::get('login', 'AdminLoginController@showLoginForm');
     Route::post('login', 'AdminLoginController@login')->name('admin.login.submit');
 });
+Route::group(['namespace' => 'admin'], function () {
+    Route::get('groups', 'AdminController@groups');
+    Route::get('group/{id}/requests', 'AdminController@group_requests');
+    Route::get('{groupID}/requestUser/{id}/accept', 'AdminController@accept_request');
+    Route::get('{groupID}/requestUser/{id}/reject', 'AdminController@reject_request');
+});
 
 
 

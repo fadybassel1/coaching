@@ -13,7 +13,7 @@ class GroupRequest extends Migration
      */
     public function up()
     {
-        Schema::create('group_request', function (Blueprint $table) {
+        Schema::create('group_requests', function (Blueprint $table) {
             $table->bigInteger('user_id')->unsigned();
             $table->bigInteger('group_id')->unsigned();
             $table->timestamps();

@@ -48,7 +48,7 @@ class GroupController extends Controller
     public function requestGroupJoin($group_id)
     {
         try {
-            DB::table('group_request')->insert(
+            DB::table('group_requests')->insert(
                 ['user_id' => Auth::user()->id, 'group_id' => $group_id]
             );
             return ['success' => true];
