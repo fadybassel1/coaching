@@ -27,6 +27,10 @@ Route::group(['namespace' => 'admin'], function () {
     Route::get('group/{id}/requests', 'AdminController@group_requests');
     Route::get('{groupID}/requestUser/{id}/accept', 'AdminController@accept_request');
     Route::get('{groupID}/requestUser/{id}/reject', 'AdminController@reject_request');
+    Route::get('createGroup', 'AdminController@view_create_group');
+    Route::post('create', 'AdminController@create_group')->name('admin.create_group');
+    Route::get('groupMembers/{id}', 'AdminController@group_members');
+    Route::get('{memberID}/remove_member/{groupID}', 'AdminController@remove_group_member');
 });
 
 

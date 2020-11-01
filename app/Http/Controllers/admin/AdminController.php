@@ -51,4 +51,45 @@ class AdminController extends Controller
         GroupRequest::where('user_id', $userID)->where('group_id', $groupID)->delete();
         return redirect()->back();
     }
+
+    public function view_create_group()
+    {
+        $tracks = Track::all();
+        return view('admin.createGroup', compact('tracks'));
+    }
+
+    public function create_group(Request $request)
+    {
+        $this->validate($request, [
+            'groupPhoto' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+        ]);
+
+        if ($request->hasFile('groupPhoto')) {
+            $image = $request->file('groupPhoto');
+            $name = time().'.'.$image->getClientOriginalExtension();
+            $destinationPath = public_path('/images');
+            $image->move($destinationPath, $name);
+            Group::create([
+                'name' => $request['groupName'],
+                'admin_id' => Auth::user()->id,
+                'track_id' => $request['trackID'],
+                'photo' => $name
+            ]);
+
+            return back()->with('success','Image Upload successfully');
+        }
+    }
+
+    public function group_members($id)
+    {
+        $members = Group::where('id', $id)->with('users')->first();
+        $gname = Group::where('id', $id)->get()[0]->name;
+        return view('admin.group_members', compact('members', 'gname', 'id'));
+    }
+
+    public function remove_group_member($memberID, $groupID)
+    {
+        DB::table('group_users')->where('user_id', $memberID)->where('group_id', $groupID)->delete();
+        return redirect()->back();
+    }
 }

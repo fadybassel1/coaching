@@ -6,6 +6,13 @@ use Illuminate\Database\Eloquent\Model;
 
 class Group extends Model
 {
+   protected $fillable = [ // allow this columns to be filled from form
+      'name',
+      'track_id',
+      'admin_id',
+      'photo'
+   ];
+
     protected $guraded=[];
 
     public function posts(){
@@ -17,5 +24,6 @@ class Group extends Model
 
     public function users(){
         return $this->belongsToMany('App\User','group_users');
-     }
+    }
+
 }
